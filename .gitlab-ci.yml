@@ -1,0 +1,25 @@
+# Node Image for docker on which code will execute
+image: node:latest
+
+# This is the stages / task to perfom in jobs
+stages:
+  - build
+  - deploy
+  
+# This command is run before the execution of stages   
+before_script:
+  - npm install
+
+# Job One for making build
+build_master:
+  stage: build
+  script:
+  - npm run build
+  only: ['master']
+
+# Job Two for deploy build to server
+deploy_master:
+  stage: deploy
+  script:
+    - echo "deploy Build"
+  only: ['master']
