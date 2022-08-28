@@ -1,5 +1,5 @@
 # Node Image for docker on which code will execute
-image: node:latest
+image: node:14
 
 # This is the stages / task to perfom in jobs
 stages:
@@ -16,10 +16,20 @@ build_master:
   script:
   - npm run build
   only: ['master']
+  artifacts:
+    paths:
+      - dist/
 
 # Job Two for deploy build to server
 deploy_master:
   stage: deploy
+  before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   script:
-    - echo "deploy Build"
+    - scp -r dist/kanann/* ubuntu@$SERVER_IP:/home/ubuntu/www/
   only: ['master']
