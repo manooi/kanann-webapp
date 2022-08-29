@@ -1,0 +1,16 @@
+<section class="navbar">
+  <app-navbar></app-navbar>
+</section>
+
+<section class="layout">
+  <mat-drawer-container class="example-container">
+    <mat-drawer #drawer mode="side" class="side-bar" [opened]="savedStateService.sideBarState">
+      <app-sidebar></app-sidebar>
+    </mat-drawer>
+    <mat-drawer-content>
+      <div class="main-content">
+        <h1>จัดการฐานข้อมูล</h1>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</section>
