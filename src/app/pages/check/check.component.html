@@ -1,0 +1,33 @@
+<h1>เช็คชื่อเข้าเรียน</h1>
+<h2>วิชาเรียน: ว02305 - วิทยาศาสตร์ทั่วไป</h2>
+<h2>ห้องเรียน: ม.6/5 จำนวนนักเรียน 25 คน</h2>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="studentId">
+    <th mat-header-cell *matHeaderCellDef> รหัสประจำตัว </th>
+    <td mat-cell *matCellDef="let element"> {{element.studentId}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="firstName">
+    <th mat-header-cell *matHeaderCellDef> ชื่อ</th>
+    <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="lastName">
+    <th mat-header-cell *matHeaderCellDef> สกุล </th>
+    <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="lastFive">
+    <th mat-header-cell *matHeaderCellDef> ประวัติการเข้าเรียน</th>
+    <td mat-cell *matCellDef> มา / ขาด / มา / มา / มา</td>
+  </ng-container>
+
+  <ng-container matColumnDef="today">
+    <th mat-header-cell *matHeaderCellDef> วันนี้</th>
+    <td mat-cell *matCellDef="let element"> {{element.today}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
