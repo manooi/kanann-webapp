@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './shared/material/material.module';
 import { LayoutComponent } from './layout/layout.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { PagenotFoundComponent } from './layout/pagenotfound/pagenotfound.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
-import { CheckComponent } from './pages/check/check.component';
+import { SharedModule } from './shared/shared.module';
+import { MaterialModule } from './shared/material/material.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,13 +18,14 @@ import { CheckComponent } from './pages/check/check.component';
     SidebarComponent,
     PagenotFoundComponent,
     NavbarComponent,
-    CheckComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    SharedModule,
+    MaterialModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

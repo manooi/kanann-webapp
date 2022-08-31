@@ -1,0 +1,21 @@
+<form [formGroup]="maintainForm">
+  <mat-card>
+    <mat-card-title>จัดการฐานข้อมูล</mat-card-title>
+    <br>
+    <mat-form-field appearance="fill">
+      <!-- <pre>{{dropdownData | json}}</pre> -->
+      <mat-label>เลือกฐานข้อมูล</mat-label>
+      <mat-select formControlName="database" [value]="2">
+        <mat-option value="1">ปีการศึกษา</mat-option>
+        <mat-option value="2">รายวิชา</mat-option>
+        <mat-option value="3">ครูผู้สอน</mat-option>
+        <!-- <mat-option *ngFor="let year of $any(dropdownData)?.academics" [value]="year.value">
+                  {{year.text}}
+                </mat-option> -->
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary">ค้นหา</button>
+  </mat-card>
+</form>
+
+<pre>{{maintainForm.value | json}}</pre>
