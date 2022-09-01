@@ -46,4 +46,8 @@ export class CommonService {
   onAcademicYearChanged(academicYear: string) {
     this.academicYearSubject.next(academicYear);
   }
+
+  getStudents() {
+    return this.http.post<any>('https://localhost:5000/Common/GetStudents', {});
+  }
 }
