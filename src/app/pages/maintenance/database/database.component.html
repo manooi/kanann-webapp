@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-title>จัดการฐานข้อมูล</mat-card-title>
-  <mat-tab-group selectedIndex="1">
+  <mat-tab-group selectedIndex="0">
     <mat-tab label="ดูข้อมูล">
       <ng-container *ngTemplateOutlet="view"></ng-container>
     </mat-tab>
@@ -26,8 +26,8 @@
   </form>
   <label class="mr-2 mt-4 block">อัพโหลดไฟล์</label>
   <input type="file" id="myFile" name="filename" (change)="handleFileInput($event)">
-  <button mat-raised-button color="accent" class="mt-3" style="display: block"
-    (click)="uploadData()" *ngIf="isFileReady">อัพโหลดไฟล์</button>
+  <button mat-raised-button color="accent" class="mt-3" style="display: block" (click)="uploadData()"
+    *ngIf="isFileReady">อัพโหลดไฟล์</button>
   <br>
   <div *ngIf="isFileReady">
     <ng-container *ngTemplateOutlet="validate"></ng-container>
@@ -38,21 +38,31 @@
   <form [formGroup]="maintainViewForm">
     <h2 class="mt-5">เลือกฐานข้อมูล</h2>
     <mat-form-field appearance="fill">
-      <!-- <pre>{{dropdownData | json}}</pre> -->
       <mat-label>ฐานข้อมูล</mat-label>
-      <mat-select formControlName="database" [value]="2">
+      <mat-select formControlName="database" (selectionChange)="onDatabaseChange($event)">
         <mat-option value="1">ปีการศึกษา</mat-option>
         <mat-option value="2">ครูผู้สอน</mat-option>
         <mat-option value="3">ชั้นเรียน</mat-option>
         <mat-option value="4">รายวิชา</mat-option>
         <mat-option value="5">นักเรียน</mat-option>
-        <!-- <mat-option *ngFor="let year of $any(dropdownData)?.academics" [value]="year.value">
-                        {{year.text}}
-                      </mat-option> -->
       </mat-select>
     </mat-form-field>
-    <button mat-raised-button color="primary" class="ml-3" (click)="search()">ค้นหา</button>
-    <table mat-table [dataSource]="data" class="mt-3">
+
+    <mat-form-field appearance="fill" class="ml-2" *ngIf="isDataBase()?.value && isDataBase()?.value !== '1'">
+      <mat-label>ปีการศึกษา</mat-label>
+      <mat-select formControlName="academicYear">
+        <mat-option *ngFor="let year of academicYear$ | async" value="{{year.value}}">{{year.value}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" *ngIf="maintainViewForm" class="ml-3" (click)="search()"
+      [disabled]="!maintainViewForm.valid">ค้นหา</button>
+
+    <div class="col mt-2 text-right" *ngIf="data?.length > 0">
+      <label class="mr-2" >ค้นหา</label>
+      <input type="text" (input)="onSearch($event)">
+    </div>
+    <table mat-table [dataSource]="filteredData" class="mt-3">
       <ng-container *ngFor="let col of displayedColumns">
         <pre>{{col | json}}</pre>
         <ng-container [matColumnDef]="col">
@@ -63,6 +73,10 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+
+    <mat-paginator *ngIf="filteredData?.length > 0" (page)="onPageEvent($event)" [length]="searchKeyword ? filteredData?.length : data?.length" [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page">
+    </mat-paginator>
   </form>
 </ng-template>
 
@@ -73,3 +87,6 @@
   <!-- <h2 class="mt-7">ตรวจสอบสำเร็จ</h2> -->
   <!-- <button mat-raised-button color="primary" class="mt-3 btn-success" style="display: block">ยืนยัน</button> -->
 </ng-template>
+
+<!-- <pre>{{this.maintainViewForm?.value |json}}</pre> -->
+<!-- <button (click)="debug()">debug</button> -->

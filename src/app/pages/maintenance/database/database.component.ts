@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DateAdapter } from '@angular/material/core';
+import { PageEvent } from '@angular/material/paginator';
+import { MatSelectChange } from '@angular/material/select';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { delay } from 'rxjs/operators';
+import { GetDatabaseRequest } from 'src/app/model/database';
 import { Dropdown } from 'src/app/model/dropdown';
 import { CommonService } from 'src/app/shared/service/api/common.service';
 import { UploadMasterService } from 'src/app/shared/service/api/uploadmaster.service';
@@ -14,7 +19,12 @@ import * as XLSX from 'xlsx';
 })
 export class DatabaseComponent implements OnInit {
   maintainViewForm!: FormGroup;
+  maintainUploadForm!: FormGroup;
+  academicYear$ = this.commonService.academicYear$;
+
   data: any;
+  filteredData: any;
+
   displayedColumns: string[] = [];
   columnsMapping: any = {
     sequence: "เลขที่",
@@ -25,9 +35,9 @@ export class DatabaseComponent implements OnInit {
     academicYear: "ปีการศึกษา",
     classRoomName: "ชั้นเรียน"
   };
-  fileToBeUploaded!: any;
-  maintainUploadForm: FormGroup;
+  searchKeyword:any;
 
+  fileToBeUploaded!: any;
   isFileReady: boolean = false;
 
   constructor(
@@ -37,29 +47,79 @@ export class DatabaseComponent implements OnInit {
     private alertService: AlertService,
     private spinner: NgxSpinnerService
   ) {
-    this.maintainViewForm = fb.group({
-      database: [null, Validators.required],
-    });
-    this.maintainUploadForm = fb.group({
-      database: [null, Validators.required],
-    });
+    this.initializeForm();
   }
 
   ngOnInit(): void {
-    // this.commonService.maintenanceDropdown$.subscribe(
-    //   (data: any) => {
-    //     this.academicYear = data.academic;
-    //     this.subjects = data.subjects;
-    //   }
-    // )
+  }
+
+  private initializeForm() {
+    this.maintainViewForm = this.fb.group({
+      database: [null, Validators.required],
+      academicYear: [null]
+    });
+
+    this.maintainUploadForm = this.fb.group({
+      database: [null, Validators.required],
+    });
+  }
+
+  onDatabaseChange(event: MatSelectChange) {
+    const isAcadamicYearSelected = event.value == 1;
+    if (!isAcadamicYearSelected) {
+      this.isAcademicYear()?.setValidators(Validators.required);
+    }
+    else {
+      this.isAcademicYear()?.clearValidators();
+      this.isAcademicYear()?.setErrors(null);
+      this.maintainViewForm.patchValue({
+        academicYear: null
+      })
+    }
+  }
+
+
+  onSearch(event: any) {
+    this.searchKeyword = event.target.value.trim();
+    if (event.target.value == '') {
+      this.filteredData = this.data.slice(0, 10);
+      return;
+    }
+
+    const keys = Object.keys(this.data[0]);
+    this.filteredData = this.data.filter((i: any) => {
+      let isMatched: boolean = false;
+      for (let key = 0; key < keys.length; key++) {
+        const value = String(i[keys[key]]);
+        if (value.includes(String(event.target.value.trim()))) {
+          isMatched = true;
+        }
+      }
+      return isMatched;
+    }).slice(0, 10);
   }
 
   search() {
-    this.commonService.getStudents().subscribe(
+    this.spinner.show();
+    const params: GetDatabaseRequest = {
+      database: this.isDataBase()?.value,
+      academicYear: this.isAcademicYear()?.value,
+    };
+
+    this.uploadMasterService.getDatabase(params).pipe(delay(100)).subscribe(
       (data) => {
+        this.spinner.hide();
+        if (data?.length == 0) {
+          this.alertService.info('No data');
+          this.data = [];
+          this.filteredData = [];
+          return;
+        }
         this.data = data;
+        this.filteredData = data?.slice(0, 10);
         this.displayedColumns = Object.keys(this.columnsMapping);
-      }
+      },
+      (error) => this.spinner.hide()
     );
   }
 
@@ -85,19 +145,40 @@ export class DatabaseComponent implements OnInit {
     this.fileToBeUploaded = fileToBeUploaded.map((i: any) => ({ ...i, StudentId: String(i.StudentId) }))
   }
 
+  onPageEvent(event: PageEvent) {
+    const pageSize = event.pageSize;
+    const pageIndex = event.pageIndex;
+    this.filteredData = this.data.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize);
+  }
+
   uploadData() {
     console.log(this.fileToBeUploaded);
     this.spinner.show();
+    const startTime = new Date().getTime();
     this.uploadMasterService.uploadStudentMaster({ data: this.fileToBeUploaded }).subscribe(
       (data) => {
         this.spinner.hide();
-        this.alertService.success("Successfully uploaded data.");
+        const elaspedTime = new Date().getTime() - startTime;
+        this.alertService.success(`Successfully uploaded data. ${elaspedTime / 1000} sec.`);
       },
       (err) => {
         this.spinner.hide();
         this.alertService.error("Error occured when uploading data.");
       }
     )
+  }
+
+  isDataBase() {
+    return this.maintainViewForm.get("database");
+  }
+
+  isAcademicYear() {
+    return this.maintainViewForm.get("academicYear");
+  }
+
+
+  debug() {
+    console.log(this.maintainViewForm.controls);
   }
 
 }

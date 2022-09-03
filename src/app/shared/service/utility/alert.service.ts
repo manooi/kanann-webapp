@@ -26,4 +26,13 @@ export class AlertService {
     })
   }
 
+  info(msg: string) {
+    Swal.fire({
+      title: 'Info',
+      text: msg,
+      icon: 'info',
+      confirmButtonText: 'Ok'
+    })
+  }
+
 }
