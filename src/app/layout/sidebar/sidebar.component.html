@@ -1,7 +1,9 @@
 <mat-list>
-  <mat-list-item style="cursor:pointer" routerLink="/maintenance/database"> จัดการฐานข้อมูล </mat-list-item>
-  <mat-list-item style="cursor:pointer" routerLink="/maintenance/users-and-roles"> จัดการ User </mat-list-item>
-  <mat-list-item style="cursor:pointer" routerLink="/check/check"> เช็คชื่อเข้าเรียน </mat-list-item>
-  <mat-list-item> กรอกคะแนน </mat-list-item>
-  <mat-list-item> Dashboard </mat-list-item>
+  <h2 class="mt-3 pl-2" style="">ผู้ดูแลระบบ</h2>
+  <mat-list-item style="cursor:pointer" routerLink="/maintenance/database" routerLinkActive="active"><mat-icon class="mr-2">settings</mat-icon>จัดการฐานข้อมูล </mat-list-item>
+  <!-- <mat-list-item style="cursor:pointer" routerLink="/maintenance/users-and-roles"> จัดการ User </mat-list-item> -->
+  <h2 class="mt-3 pl-2" style="">ครู</h2>
+  <mat-list-item style="cursor:pointer" routerLink="/check" routerLinkActive="active"><mat-icon class="mr-2">access_time</mat-icon> เช็คชื่อเข้าเรียน </mat-list-item>
+  <mat-list-item style="cursor:pointer" routerLinkActive="active"><mat-icon class="mr-2">face</mat-icon> จัดการคะแนน </mat-list-item>
+  <mat-list-item style="cursor:pointer" routerLinkActive="active"><mat-icon class="mr-2">dashboard</mat-icon> Dashbord </mat-list-item>
 </mat-list>

@@ -3,19 +3,21 @@ import { CheckComponent } from './check.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MaterialModule } from 'src/app/shared/material/material.module';
 import { RouterModule, Routes } from '@angular/router';
+import { ClassComponent } from './class/class.component';
 
 const routes: Routes = [
-  {
-    path: 'check', component: CheckComponent,
-  },
+  { path: '', component: CheckComponent },
+  { path: 'view', children: [{ path: ':id', component: ClassComponent, data: { isEdit: false } }] },
+  { path: 'edit', children: [{ path: ':id', component: ClassComponent }], data: { isEdit: true } },
 ];
 
 @NgModule({
   declarations: [
-    CheckComponent
+    CheckComponent,
+    ClassComponent,
   ],
   imports: [
-    RouterModule.forChild(routes), 
+    RouterModule.forChild(routes),
     SharedModule,
     MaterialModule
   ],

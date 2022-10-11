@@ -1,0 +1,43 @@
+<mat-card>
+  <form [formGroup]="maintainViewForm">
+    <h2 class="mt-5">เลือกฐานข้อมูล</h2>
+    <mat-form-field appearance="fill">
+      <mat-label>ฐานข้อมูล</mat-label>
+      <mat-select formControlName="database" (selectionChange)="onDatabaseChange($event)">
+        <mat-option *ngFor="let masterType of (masterType$ | async)" value="{{masterType.value}}">{{masterType.text}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="ml-2" *ngIf="showAcademicYear()">
+      <mat-label>ปีการศึกษา</mat-label>
+      <mat-select formControlName="academicYear">
+        <mat-option *ngFor="let year of academicYear$ | async" value="{{year.value}}">{{year.text}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" *ngIf="maintainViewForm" class="ml-3" (click)="search()"
+      [disabled]="!maintainViewForm.valid">ค้นหา</button>
+  </form>
+</mat-card>
+
+<mat-card *ngIf="data?.length > 0" class="mt-3">
+  <div>
+    <!-- <button (click)="rerender()">rerender</button> -->
+    <h1>ข้อมูล</h1>
+    <table datatable [dtOptions]="dtOptions" class="cell-border compact stripe">
+      <thead>
+        <tr>
+          <th *ngFor="let col of displayedColumns">{{this.columnsMapping[col]}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dt of data">
+          <td *ngFor="let col of displayedColumns">{{dt[col]}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</mat-card>
+
+<!-- <button (click)="debug()">button</button> -->

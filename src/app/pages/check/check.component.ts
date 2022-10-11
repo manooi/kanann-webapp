@@ -1,414 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
+import { AppConstant } from 'src/app/config/app.constant';
+import { CreateTransactionRequest } from 'src/app/model/check';
+import { CheckService } from 'src/app/shared/service/api/check.service';
+import { CommonService } from 'src/app/shared/service/api/common.service';
+import { AlertService } from 'src/app/shared/service/utility/alert.service';
+import cloneDeep from "lodash/cloneDeep";
 
 export interface Student {
   studentId: number;
   firstName: string;
   lastName: string;
-  lastFive?:any;
-  today?:any;
+  lastFive?: any;
+  today?: any;
 }
-
-const ELEMENT_DATA: Student[] = [{
-    "studentId": 4192,
-    "firstName": "Roi",
-    "lastName": "Lintill"
-  }, {
-    "studentId": 4563,
-    "firstName": "Dorene",
-    "lastName": "Mainston"
-  }, {
-    "studentId": 4720,
-    "firstName": "Lucia",
-    "lastName": "Meas"
-  }, {
-    "studentId": 4269,
-    "firstName": "Ken",
-    "lastName": "Raiman"
-  }, {
-    "studentId": 4174,
-    "firstName": "Jarid",
-    "lastName": "Dalley"
-  }, {
-    "studentId": 4397,
-    "firstName": "Lucie",
-    "lastName": "Mourgue"
-  }, {
-    "studentId": 4898,
-    "firstName": "Linnet",
-    "lastName": "Rioch"
-  }, {
-    "studentId": 4853,
-    "firstName": "Mellie",
-    "lastName": "Pennini"
-  }, {
-    "studentId": 4752,
-    "firstName": "Valentijn",
-    "lastName": "Guerrazzi"
-  }, {
-    "studentId": 4040,
-    "firstName": "Ferdie",
-    "lastName": "Blunderfield"
-  }, {
-    "studentId": 4115,
-    "firstName": "Merna",
-    "lastName": "O'Rowane"
-  }, {
-    "studentId": 4121,
-    "firstName": "Audre",
-    "lastName": "Sarfatti"
-  }, {
-    "studentId": 4879,
-    "firstName": "Loralee",
-    "lastName": "Gerrit"
-  }, {
-    "studentId": 4601,
-    "firstName": "Gray",
-    "lastName": "Donett"
-  }, {
-    "studentId": 4328,
-    "firstName": "Madella",
-    "lastName": "Jerrom"
-  }, {
-    "studentId": 4090,
-    "firstName": "Abbi",
-    "lastName": "Poller"
-  }, {
-    "studentId": 4049,
-    "firstName": "Somerset",
-    "lastName": "Fivey"
-  }, {
-    "studentId": 4305,
-    "firstName": "Kristine",
-    "lastName": "Dishman"
-  }, {
-    "studentId": 4047,
-    "firstName": "Leonid",
-    "lastName": "Gillman"
-  }, {
-    "studentId": 4500,
-    "firstName": "Dore",
-    "lastName": "Chadwell"
-  }, {
-    "studentId": 4362,
-    "firstName": "Michel",
-    "lastName": "Ewles"
-  }, {
-    "studentId": 4395,
-    "firstName": "Kirstyn",
-    "lastName": "St. Hill"
-  }, {
-    "studentId": 4225,
-    "firstName": "Fonsie",
-    "lastName": "Clement"
-  }, {
-    "studentId": 4553,
-    "firstName": "Dorolice",
-    "lastName": "Atmore"
-  }, {
-    "studentId": 4062,
-    "firstName": "Sascha",
-    "lastName": "Mealing"
-  }, {
-    "studentId": 4085,
-    "firstName": "Dagny",
-    "lastName": "Haley"
-  }, {
-    "studentId": 4630,
-    "firstName": "Ansell",
-    "lastName": "Spellacey"
-  }, {
-    "studentId": 4874,
-    "firstName": "Ashlin",
-    "lastName": "Ashwood"
-  }, {
-    "studentId": 4128,
-    "firstName": "Sonia",
-    "lastName": "Kitlee"
-  }, {
-    "studentId": 4168,
-    "firstName": "Clyve",
-    "lastName": "Mariault"
-  }, {
-    "studentId": 4525,
-    "firstName": "Craggy",
-    "lastName": "Jaouen"
-  }, {
-    "studentId": 4335,
-    "firstName": "Tatiana",
-    "lastName": "Lawless"
-  }, {
-    "studentId": 4507,
-    "firstName": "Dav",
-    "lastName": "Bigham"
-  }, {
-    "studentId": 4082,
-    "firstName": "Milissent",
-    "lastName": "Garces"
-  }, {
-    "studentId": 4537,
-    "firstName": "Desmond",
-    "lastName": "Rubert"
-  }, {
-    "studentId": 4123,
-    "firstName": "Melinde",
-    "lastName": "Dunkley"
-  }, {
-    "studentId": 4883,
-    "firstName": "Lucais",
-    "lastName": "Fridaye"
-  }, {
-    "studentId": 4006,
-    "firstName": "Audre",
-    "lastName": "Waterstone"
-  }, {
-    "studentId": 4463,
-    "firstName": "Teresa",
-    "lastName": "Malbon"
-  }, {
-    "studentId": 4307,
-    "firstName": "Zacharie",
-    "lastName": "Starsmeare"
-  }, {
-    "studentId": 4451,
-    "firstName": "Dani",
-    "lastName": "Maydway"
-  }, {
-    "studentId": 4339,
-    "firstName": "Frances",
-    "lastName": "Crocumbe"
-  }, {
-    "studentId": 4200,
-    "firstName": "Clevey",
-    "lastName": "Abramowitz"
-  }, {
-    "studentId": 4040,
-    "firstName": "Vivi",
-    "lastName": "Goodwyn"
-  }, {
-    "studentId": 4518,
-    "firstName": "Frannie",
-    "lastName": "Robbel"
-  }, {
-    "studentId": 4042,
-    "firstName": "Annamaria",
-    "lastName": "De Cleen"
-  }, {
-    "studentId": 4166,
-    "firstName": "Hamlen",
-    "lastName": "Zoephel"
-  }, {
-    "studentId": 4923,
-    "firstName": "Deeanne",
-    "lastName": "Ferrotti"
-  }, {
-    "studentId": 4095,
-    "firstName": "Mitzi",
-    "lastName": "Manilo"
-  }, {
-    "studentId": 4903,
-    "firstName": "Lazare",
-    "lastName": "Llewellyn"
-  }, {
-    "studentId": 4633,
-    "firstName": "Manon",
-    "lastName": "Hefner"
-  }, {
-    "studentId": 4987,
-    "firstName": "Sharai",
-    "lastName": "Dunguy"
-  }, {
-    "studentId": 4954,
-    "firstName": "Virgil",
-    "lastName": "Diss"
-  }, {
-    "studentId": 4639,
-    "firstName": "Myrvyn",
-    "lastName": "Manon"
-  }, {
-    "studentId": 4964,
-    "firstName": "Kassi",
-    "lastName": "Weekland"
-  }, {
-    "studentId": 4727,
-    "firstName": "Clem",
-    "lastName": "Kincade"
-  }, {
-    "studentId": 4819,
-    "firstName": "Stewart",
-    "lastName": "Clements"
-  }, {
-    "studentId": 4102,
-    "firstName": "Isidora",
-    "lastName": "Leadston"
-  }, {
-    "studentId": 4561,
-    "firstName": "Saxon",
-    "lastName": "Malcolm"
-  }, {
-    "studentId": 4079,
-    "firstName": "Natal",
-    "lastName": "Picopp"
-  }, {
-    "studentId": 4768,
-    "firstName": "Emylee",
-    "lastName": "Tinniswood"
-  }, {
-    "studentId": 4576,
-    "firstName": "Winn",
-    "lastName": "Durdy"
-  }, {
-    "studentId": 4258,
-    "firstName": "Constancy",
-    "lastName": "Cattell"
-  }, {
-    "studentId": 4688,
-    "firstName": "Marketa",
-    "lastName": "Brose"
-  }, {
-    "studentId": 4125,
-    "firstName": "Urban",
-    "lastName": "Zecchii"
-  }, {
-    "studentId": 4667,
-    "firstName": "Emera",
-    "lastName": "O'Cahsedy"
-  }, {
-    "studentId": 4737,
-    "firstName": "Fernando",
-    "lastName": "Eddow"
-  }, {
-    "studentId": 4920,
-    "firstName": "Lindy",
-    "lastName": "Lounds"
-  }, {
-    "studentId": 4250,
-    "firstName": "Edithe",
-    "lastName": "Barnsdall"
-  }, {
-    "studentId": 4762,
-    "firstName": "Jilleen",
-    "lastName": "Coleford"
-  }, {
-    "studentId": 4430,
-    "firstName": "Cindelyn",
-    "lastName": "Keyho"
-  }, {
-    "studentId": 4282,
-    "firstName": "Aida",
-    "lastName": "Tuttiett"
-  }, {
-    "studentId": 4926,
-    "firstName": "Claudie",
-    "lastName": "Hrinishin"
-  }, {
-    "studentId": 4760,
-    "firstName": "Tracey",
-    "lastName": "Spleving"
-  }, {
-    "studentId": 4838,
-    "firstName": "Rhonda",
-    "lastName": "Blint"
-  }, {
-    "studentId": 4505,
-    "firstName": "Loralie",
-    "lastName": "Tithecote"
-  }, {
-    "studentId": 4200,
-    "firstName": "Kati",
-    "lastName": "Tellenbroker"
-  }, {
-    "studentId": 4415,
-    "firstName": "Annetta",
-    "lastName": "Bilbey"
-  }, {
-    "studentId": 4587,
-    "firstName": "Faustina",
-    "lastName": "Hasnney"
-  }, {
-    "studentId": 4596,
-    "firstName": "Aeriell",
-    "lastName": "Ody"
-  }, {
-    "studentId": 4060,
-    "firstName": "Mathe",
-    "lastName": "Duncan"
-  }, {
-    "studentId": 4966,
-    "firstName": "Gav",
-    "lastName": "Ellph"
-  }, {
-    "studentId": 4146,
-    "firstName": "Sawyer",
-    "lastName": "Cuffin"
-  }, {
-    "studentId": 4435,
-    "firstName": "Aubine",
-    "lastName": "Kyteley"
-  }, {
-    "studentId": 4386,
-    "firstName": "Shaine",
-    "lastName": "Trainor"
-  }, {
-    "studentId": 4600,
-    "firstName": "Robinia",
-    "lastName": "Quilliam"
-  }, {
-    "studentId": 4824,
-    "firstName": "Mikol",
-    "lastName": "Fratson"
-  }, {
-    "studentId": 4517,
-    "firstName": "Norina",
-    "lastName": "Tidridge"
-  }, {
-    "studentId": 4142,
-    "firstName": "Celina",
-    "lastName": "Tomsett"
-  }, {
-    "studentId": 4878,
-    "firstName": "Darwin",
-    "lastName": "Woollends"
-  }, {
-    "studentId": 4682,
-    "firstName": "Butch",
-    "lastName": "Essberger"
-  }, {
-    "studentId": 4803,
-    "firstName": "Marco",
-    "lastName": "Whiteford"
-  }, {
-    "studentId": 4337,
-    "firstName": "Emlynn",
-    "lastName": "Forbear"
-  }, {
-    "studentId": 4775,
-    "firstName": "Roxine",
-    "lastName": "Iacovuzzi"
-  }, {
-    "studentId": 4961,
-    "firstName": "Obed",
-    "lastName": "Popplestone"
-  }, {
-    "studentId": 4819,
-    "firstName": "Fowler",
-    "lastName": "Epp"
-  }, {
-    "studentId": 4338,
-    "firstName": "Zeke",
-    "lastName": "Beckitt"
-  }, {
-    "studentId": 4905,
-    "firstName": "Gerianna",
-    "lastName": "Depka"
-  }, {
-    "studentId": 4700,
-    "firstName": "Jessamyn",
-    "lastName": "Burle"
-  }, {
-    "studentId": 4906,
-    "firstName": "Meredithe",
-    "lastName": "Koch"
-}];
 
 @Component({
   selector: 'app-check',
@@ -416,12 +23,109 @@ const ELEMENT_DATA: Student[] = [{
   styleUrls: ['./check.component.scss']
 })
 export class CheckComponent implements OnInit {
+  maintainForm!: FormGroup;
+  maintainDropdown$: any = this.commonService.maintenanceDropdown$;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
+  data: any;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(
+    private commonService: CommonService,
+    private checkService: CheckService,
+    private alertService: AlertService,
+    private fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {
+    this.initializeForm();
+    this.dtOptions = cloneDeep(AppConstant.dtOptionsWithOutSearch);
   }
 
-  displayedColumns: string[] = ['studentId', 'firstName', 'lastName', 'lastFive', 'today'];
-  dataSource = ELEMENT_DATA.map((i)=>({...i, today: Math.random() > 0.3 ? 'มา' : 'ไม่มา'}))
+  create() {
+    const param: CreateTransactionRequest = {
+      academicYearId: this.isAcademicYear.value,
+      subjectCode: this.isSubject.value,
+      classRoomId: this.isClassRoom.value,
+      startDateTime: new Date()
+    }
+    this.checkService.createTransaction(param).subscribe(
+      (data) => {
+        this.alertService.success('สร้างคลาสเรียนสำเร็จ');
+        this.search();
+      },
+      (err) => {
+        this.alertService.error('error');
+      },
+    )
+  }
+
+  private initializeForm() {
+    this.maintainForm = this.fb.group({
+      academicYear: [null, Validators.required],
+      subject: [null, Validators.required],
+      classRoom: [null, Validators.required]
+    });
+  }
+
+  ngOnInit(): void {
+
+  }
+
+  onAcademicYearChanges(academicYear: string) {
+    this.maintainForm.patchValue({
+      subject: null,
+      classRoom: null
+    });
+    this.maintainForm.updateValueAndValidity();
+    this.commonService.onAcademicYearChanges(academicYear);
+  }
+
+  onSubjectChanges(subject: string) {
+    this.maintainForm.patchValue({
+      classRoom: null
+    });
+    this.maintainForm.updateValueAndValidity();
+    this.commonService.onSubjectChanges(subject);
+  }
+
+  get isAcademicYear() {
+    return this.maintainForm.get('academicYear') as FormGroup;
+  }
+
+  get isSubject() {
+    return this.maintainForm.get('subject') as FormGroup;
+  }
+
+  get isClassRoom() {
+    return this.maintainForm.get('classRoom') as FormGroup;
+  }
+
+  debug() {
+    console.log(this.maintainForm);
+  }
+
+  search() {
+    this.data = [];
+    console.log(this.maintainForm);
+    const param = {
+      academicYearId: this.isAcademicYear.value,
+      subjectCode: this.isSubject.value,
+      classRoomId: this.isClassRoom.value
+    };
+    this.checkService.getTransactionClass(param).subscribe(
+      (data: any) => {
+        if (data.result?.length == 0) {
+          this.alertService.info('ไม่มีข้อมูล');
+          return;
+        }
+        this.data = data.result;
+        this.dtTrigger.next();
+      },
+      (err) => {
+        console.log("err", err);
+      },
+      () => console.log("completed")
+    );
+
+  }
 }

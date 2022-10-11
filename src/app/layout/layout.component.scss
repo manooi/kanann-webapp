@@ -1,17 +1,18 @@
 .layout {
-  background-color: rgb(217, 227, 237) !important;
+  // background-color: rgb(217, 227, 237) !important;
   // margin: 0 15% 0 15%;
 }
 
 .main-content {
-  background-color: rgb(217, 227, 237) !important;
+  background-color: #ffffff !important;
   min-height: 100vh !important;
   padding: 16px 16px 0 16px;
 }
 
 .side-bar {
-  width: 200px !important;
+  width: 300px !important;
   background-color: rgb(250, 250, 250);
+  border: 0px;
 }
 
 // @media screen and (max-width: 1200px)   {

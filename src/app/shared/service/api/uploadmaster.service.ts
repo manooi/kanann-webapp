@@ -1,5 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { GetDatabaseRequest } from 'src/app/model/database';
 
 @Injectable({ providedIn: 'root' })
@@ -15,6 +17,10 @@ export class UploadMasterService {
   }
 
   getDatabase(params: GetDatabaseRequest) {
-    return this.http.post<any>('https://localhost:5000/Common/GetDatabase', params);
+    const masterIdParam = new HttpParams().set('masterId', params.database);
+    return forkJoin({
+      database: this.http.post<any>('https://localhost:5000/Common/GetDatabase', params).pipe(map((i) => i.result)),
+      mapping: this.http.get<any>('https://localhost:5000/Common/MasterMapping', { params: masterIdParam }).pipe(map((i)=>i.result))
+    });
   }
 }

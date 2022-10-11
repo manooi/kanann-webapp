@@ -3,13 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from 'src/app/shared/material/material.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DatabaseComponent } from './database/database.component';
-import { UserAndRoleComponent } from './user-and-role/user-and-role.component';
+import { UploadComponent } from './database/upload/upload.component';
+import { ViewComponent } from './database/view/view.component';
 
 const routes: Routes = [
   {
     path: 'database', component: DatabaseComponent,
   },
-  { path: 'users-and-roles', component: UserAndRoleComponent}
 ];
 
 @NgModule({
@@ -18,7 +18,7 @@ const routes: Routes = [
     SharedModule,
     MaterialModule
   ],
-  declarations: [DatabaseComponent, UserAndRoleComponent],
+  declarations: [DatabaseComponent, UploadComponent, ViewComponent],
   exports: [RouterModule]
 })
 export class MaintenanceModule { }

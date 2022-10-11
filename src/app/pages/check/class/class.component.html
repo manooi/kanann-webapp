@@ -1,0 +1,81 @@
+<h1 class="mt-4" style="font-size: 2.5em">
+  วิชา {{header.subjectName}} - {{header.subjectCode}}
+  <!-- <mat-icon style="font-size: 0.8em" class="mr-2">access_time</mat-icon> เช็คชื่อเข้าเรียน -->
+</h1>
+<h1>ห้อง {{header.classRoomName}}</h1>
+<h1>วันที่ {{header.classDate | thaidate}}</h1>
+<h2>RFID reader status <mat-icon [ngStyle]="{'color': $any((availableReader$ |async))?.count > 0 ? 'green' : 'red'}">tungsten</mat-icon>
+</h2>
+<hr>
+
+<div class="text-right mb-3">
+  <button mat-raised-button color="success" style="width: 150px" (click)="save()"
+    [disabled]="!isFormTouchedOrDirty()">บันทึก</button>
+</div>
+
+<form [formGroup]="form" novalidate>
+  <div id="table">
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="cell-border compact stripe">
+      <thead>
+        <tr>
+          <th>เลขที่</th>
+          <th>เลขประจำตัว</th>
+          <th>ชื่อ</th>
+          <th>สกุล</th>
+          <th>เวลาที่บันทึก</th>
+          <th style="color:green">มา {{getNoOfStudents(1)}}</th>
+          <th style="color:orange">สาย {{getNoOfStudents(2)}}</th>
+          <th style="color:gray">ลา {{getNoOfStudents(3)}}</th>
+          <th style="color:red">ขาด {{getNoOfStudents(4)}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container formArrayName="status">
+          <tr *ngFor="let dt of data; let i = index">
+            <td>{{i+1}}</td>
+            <td>{{dt.studentId}}</td>
+            <td>{{dt.student.firstName}}</td>
+            <td>{{dt.student.lastName}}</td>
+            <!-- <td>{{dt.attendTime}}</td> -->
+            <ng-container [formGroup]="eachFormGroup(i)">
+              <td>
+                <!-- <input type="text" formControlName="attendTime"> -->
+                {{eachFormGroup(i).value.attendTime | thaidate}}
+              </td>
+              <td>
+                <mat-radio-group formControlName="attendanceStatus" name="{{i}}">
+                  <mat-radio-button value="1" name="{{i}}" color="primary" (click)="onStatusClick(i)">
+                  </mat-radio-button>
+                </mat-radio-group>
+              </td>
+              <td>
+                <mat-radio-group formControlName="attendanceStatus" name="{{i}}">
+                  <mat-radio-button value="2" name="{{i}}" color="primary" (click)="onStatusClick(i)">
+                  </mat-radio-button>
+                </mat-radio-group>
+              </td>
+              <td>
+                <mat-radio-group formControlName="attendanceStatus" name="{{i}}">
+                  <mat-radio-button value="3" name="{{i}}" color="primary" (click)="onStatusClick(i)">
+                  </mat-radio-button>
+                </mat-radio-group>
+              </td>
+              <td>
+                <mat-radio-group formControlName="attendanceStatus" name="{{i}}">
+                  <mat-radio-button value="4" name="{{i}}" color="primary" (click)="onStatusClick(i, '4')">
+                  </mat-radio-button>
+                </mat-radio-group>
+              </td>
+            </ng-container>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+</form>
+
+<!-- <pre>{{rfidMapping | json}}</pre> -->
+<!-- <pre>{{(availableReader$ |async) | json}}</pre> -->
+<button (click)="debug()">button</button>
+<!-- <pre>{{isStatus.value | json}}</pre> -->

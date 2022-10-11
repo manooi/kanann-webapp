@@ -1,0 +1,41 @@
+// /* active tab */
+// :host ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+//   color: rgb(255, 255, 255);
+// background-color: #5469d5 !important;
+// border-radius: 5px 5px 0 0;
+// } 
+
+// /* active tab */
+// :host ::ng-deep .mat-tab-list .mat-tab-labels .mat-focus-indicator  {
+// color: rgb(255, 255, 255);
+// background-color: #2f4ce0 !important;
+// }
+
+// :host ::ng-deep .mat-tab-label {
+// color: rgb(255, 255, 255);
+// background-color: #2f4ce0 !important;
+// }
+
+// /* ink bar */
+// :host ::ng-deep .mat-ink-bar {
+  // background-color:  wh !important;
+// }
+
+.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
+.mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
+  opacity: 1;
+}
+
+.mat-success {
+  color: #fff !important;
+  background-color: #28a745 !important;
+}
+
+.mat-success[disabled] {
+  background-color: rgba(0, 0, 0, 0.12) !important;
+  color: rgba(0, 0, 0, 0.26) !important;
+}
+
+.dataTables_length {
+  margin-top: 10px;
+}

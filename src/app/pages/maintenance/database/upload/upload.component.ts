@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { DataTableDirective } from 'angular-datatables';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -12,12 +12,11 @@ import { AlertService } from 'src/app/shared/service/utility/alert.service';
 import * as XLSX from 'xlsx';
 
 @Component({
-  selector: 'app-database',
-  templateUrl: './database.component.html',
-  styleUrls: ['./database.component.scss']
+  selector: 'app-upload',
+  templateUrl: './upload.component.html',
+  styleUrls: ['./upload.component.scss']
 })
-export class DatabaseComponent implements OnInit {
-  maintainViewForm!: FormGroup;
+export class UploadComponent implements OnInit {
   maintainUploadForm!: FormGroup;
   academicYear$ = this.commonService.academicYear$;
   masterType$ = this.commonService.masterType$;
@@ -53,55 +52,9 @@ export class DatabaseComponent implements OnInit {
   }
 
   private initializeForm() {
-    this.maintainViewForm = this.fb.group({
-      database: [null, Validators.required],
-      academicYear: [null]
-    });
-
     this.maintainUploadForm = this.fb.group({
       database: [null, Validators.required],
     });
-  }
-
-  onDatabaseChange(event: MatSelectChange) {
-    const isAcadamicYearSelected = (event.value == 1 || event.value == 2);
-    if (!isAcadamicYearSelected) {
-      this.isAcademicYear()?.setValidators(Validators.required);
-    }
-    else {
-      this.isAcademicYear()?.clearValidators();
-      this.isAcademicYear()?.setErrors(null);
-      this.maintainViewForm.patchValue({
-        academicYear: null
-      })
-    }
-  }
-
-  search() {
-    this.spinner.show();
-    this.data = [];
-    const params: GetDatabaseRequest = {
-      database: +this.isDataBase()?.value,
-      academicYearId: +this.isAcademicYear()?.value,
-    };
-
-    this.uploadMasterService.getDatabase(params).pipe(delay(100)).subscribe(
-      (res: any) => {
-        this.spinner.hide();
-        if (res.database?.length == 0) {
-          this.alertService.info('ไม่มีข้อมูล');
-          this.data = [];
-          return;
-        }
-        this.data = res.database;
-        this.displayedColumns = res.mapping.map((i: any) => i.variable);
-        res.mapping.forEach((map: any) => {
-          this.columnsMapping[map.variable] = map.name;
-        });
-        this.dtTrigger.next();
-      },
-      (error) => this.spinner.hide()
-    );
   }
 
   handleFileInput(event: any) {
@@ -138,27 +91,14 @@ export class DatabaseComponent implements OnInit {
       },
       (err) => {
         this.spinner.hide();
-        this.alertService.error("Error occured when uploading data.");
+        const errMsg = err?.error?.responseException?.exceptionMessage?.detail;
+        this.alertService.error("Error occured when uploading data. <br>" + errMsg);
       }
     )
   }
-
-  isDataBase() {
-    return this.maintainViewForm.get("database");
-  }
-
-  isAcademicYear() {
-    return this.maintainViewForm.get("academicYear");
-  }
-
-  showAcademicYear() {
-    return this.isDataBase()?.value && this.isDataBase()?.value !== '1' && this.isDataBase()?.value !== '2';
-  }
-
 
   debug() {
     // console.log(this.maintainViewForm.controls);
     console.log(this.selectedTabIndex);
   }
-
 }

@@ -11,3 +11,15 @@ th {
   font-size: larger;
   font-weight: bolder;
 }
+
+.selection-box {
+  display: flex;
+  column-gap: 1rem;
+}
+
+a,
+a:visited,
+a:hover,
+a:active {
+  color: inherit;
+}

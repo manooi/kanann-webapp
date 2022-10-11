@@ -11,18 +11,22 @@ export class AlertService {
   error(msg: string) {
     Swal.fire({
       title: 'Error!',
-      text: msg,
+      html: `<html>${msg}</html>`,
       icon: 'error',
       confirmButtonText: 'Ok'
     })
   }
 
-  success(msg: string) {
+  success(msg: string, callback?:any) {
     Swal.fire({
       title: 'Success',
       text: msg,
       icon: 'success',
       confirmButtonText: 'Ok'
+    }).then((result)=> {
+      if(result.isConfirmed) {
+        callback();
+      }
     })
   }
 

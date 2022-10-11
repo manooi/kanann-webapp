@@ -1,4 +1,4 @@
 export interface GetDatabaseRequest {
   database: number,
-  academicYear: string
+  academicYearId: number
 }
