@@ -1,0 +1,51 @@
+<h1 mat-dialog-title>สร้างใบงานใหม่</h1>
+
+<div mat-dialog-content>
+
+  <h3>ปีการศึกษา {{data?.academicYear.text}}</h3>
+  <h3>วิชา {{data.subject.subjectCode}} - {{data.subject.subjectName}}</h3>
+  <form [formGroup]="createAssignmentForm" novalidate>
+    <div class="grid">
+      <div class="col-12">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>ชื่องาน</mat-label>
+          <input matInput formControlName="assignmentName">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="grid">
+      <!-- <div class="col-6">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>กำหนดส่ง</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="deadlineDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div> -->
+      <div class="col-12">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>คะแนนเต็ม</mat-label>
+          <input matInput type="number" formControlName="totalScore" min="0" step="5">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="grid mb-5">
+      <div class="col-12">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>ห้องเรียน</mat-label>
+          <mat-select multiple formControlName="assignedClassRooms">
+            <mat-option *ngFor="let classRoom of (classRoom$ | async)" [value]="classRoom">{{classRoom.text}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- <pre>{{createAssignmentForm.value | json}}</pre> -->
+
+<div mat-dialog-actions>
+  <button mat-raised-button color="success" [disabled]="!createAssignmentForm?.valid" (click)="create()">สร้าง</button>
+  <button mat-raised-button color="warn" mat-dialog-close>ยกเลิก</button>
+</div>

@@ -7,7 +7,7 @@ import { Dropdown } from 'src/app/model/dropdown';
 @Injectable({ providedIn: 'root' })
 export class CommonService {
   selectedProvince$: any;
-  constructor(private http: HttpClient) { }
+  constructor(public http: HttpClient) { }
 
   academicYear$ = this.http.get<any[]>('https://localhost:5000/Common/AcademicYear').pipe(map((i: any) => i.result));
   masterType$ = this.http.get<Dropdown[]>('https://localhost:5000/Common/MasterName').pipe(map((i: any) => i.result));
@@ -32,23 +32,6 @@ export class CommonService {
     }),
   );
 
-  maintenanceDropdown$ = combineLatest([
-    this.academicYear$,
-    this.selectedAcademicYear$,
-    this.availableSubject$,
-    this.selectedSubject$,
-    this.availableClassRoom$
-  ])
-    .pipe(
-      map((i: any) => {
-        return {
-          academics: i[0],
-          subjects: i[2],
-          classRooms: i[4]
-        }
-      }),
-    );
-
   getSubjectByAcademicYear(params: any) {
     return this.http.post<any[]>('https://localhost:5000/Common/GetSubjectByAcademicYear', params).pipe(map((i: any) => i.result));
   }
@@ -63,6 +46,11 @@ export class CommonService {
     )
   }
 
+  getClassRoom(subjectCode: string, academicYearId: string) {
+    const queryParam = new HttpParams().set('academicYearId', academicYearId).set('subjectCode', subjectCode);
+    return this.http.get<any[]>('https://localhost:5000/Common/ClassRoom', { params: queryParam }).pipe(map((i: any) => i.result));
+  }
+
   onAcademicYearChanges(academicYear: string) {
     this.academicYearSubject.next(academicYear);
   }
@@ -74,6 +62,4 @@ export class CommonService {
   getStudents() {
     return this.http.post<any>('https://localhost:5000/Common/GetStudents', {});
   }
-
-
 }

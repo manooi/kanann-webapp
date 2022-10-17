@@ -1,0 +1,55 @@
+<form [formGroup]="editscoreForm" novalidate *ngIf="data?.assignmentHeaders.length > 0">
+  <h1>วิชา ว320319 - เคมี 5</h1>
+  <div class="grid">
+    <div class="col">
+      <h2>ห้องเรียน {{data?.classRoomName}}</h2>
+    </div>
+    <div class="col text-right">
+      <button mat-raised-button color="success" style="width: 150px" (click)="save()"
+        [disabled]="!isFormReady()">บันทึก</button>
+    </div>
+  </div>
+  <ng-container formArrayName="assignment">
+    <table>
+      <tr>
+        <th rowspan="2" class="no">เลขที่</th>
+        <th rowspan="2">รหัสประจำตัว</th>
+        <th rowspan="2" class="name">ชื่อ</th>
+        <th *ngFor="let assignment of data?.assignmentHeaders">{{assignment.assignmentName}}
+          <br>({{assignment.totalScore}})
+        </th>
+      </tr>
+      <tr>
+        <th class="subject" *ngFor="let _ of data?.assignmentHeaders; let i = index" [formGroupName]="i">
+          <input type="checkbox" formControlName="checkBox">
+        </th>
+      </tr>
+      <tr *ngFor="let student of data?.assignmentHeaders[0]?.scores; let seq = index">
+        <td class="no">{{student.sequence}}</td>
+        <td>{{student.studentId}}</td>
+        <td class="name"><span class="pl-2"></span>{{student.firstName}} {{student.lastName}}</td>
+
+        <td *ngFor="let fg of isAssignment.controls; let i = index" [formGroupName]="i" class="score-input">
+          <!-- <td *ngFor="let _ of data?.assignmentHeaders; let i = index" [formGroupName]="i"> -->
+          <ng-container formArrayName="score">
+            <div [formGroupName]="seq">
+              <input type="number" formControlName="score" [min]="0" [readonly]="isReadOnly(i)"
+                [tabindex]="getTabIndex(i)">
+              <p *ngIf="!getAssignmentFormControl(i, seq).valid && getAssignmentFormControl(i, seq).enabled"
+                style="color: red">invalid</p>
+            </div>
+          </ng-container>
+        </td>
+      </tr>
+    </table>
+  </ng-container>
+</form>
+
+
+<!-- <pre>{{editscoreForm.value | json}}</pre> -->
+<!-- <button (click)="debug()">button</button> -->
+
+
+<!-- <td *ngFor="let _ of data?.assignmentHeaders; let i = index" class="score-input">
+          <input type="number"  [value]="data?.assignmentHeaders[i].scores[seq].score" [min]=0 [max]="data?.assignmentHeaders[i].totalScore">
+        </td> -->

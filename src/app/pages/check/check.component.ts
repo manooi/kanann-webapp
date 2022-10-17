@@ -8,6 +8,7 @@ import { CheckService } from 'src/app/shared/service/api/check.service';
 import { CommonService } from 'src/app/shared/service/api/common.service';
 import { AlertService } from 'src/app/shared/service/utility/alert.service';
 import cloneDeep from "lodash/cloneDeep";
+import { MaintenanceService } from 'src/app/shared/service/api/maintenance.service';
 
 export interface Student {
   studentId: number;
@@ -20,17 +21,18 @@ export interface Student {
 @Component({
   selector: 'app-check',
   templateUrl: './check.component.html',
-  styleUrls: ['./check.component.scss']
+  styleUrls: ['./check.component.scss'],
+  providers: [MaintenanceService]
 })
 export class CheckComponent implements OnInit {
   maintainForm!: FormGroup;
-  maintainDropdown$: any = this.commonService.maintenanceDropdown$;
+  maintainDropdown$: any = this.maintenanceService.maintenanceDropdown$;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   data: any;
 
   constructor(
-    private commonService: CommonService,
+    private maintenanceService: MaintenanceService,
     private checkService: CheckService,
     private alertService: AlertService,
     private fb: FormBuilder,
@@ -77,7 +79,7 @@ export class CheckComponent implements OnInit {
       classRoom: null
     });
     this.maintainForm.updateValueAndValidity();
-    this.commonService.onAcademicYearChanges(academicYear);
+    this.maintenanceService.onAcademicYearChanges(academicYear);
   }
 
   onSubjectChanges(subject: string) {
@@ -85,7 +87,7 @@ export class CheckComponent implements OnInit {
       classRoom: null
     });
     this.maintainForm.updateValueAndValidity();
-    this.commonService.onSubjectChanges(subject);
+    this.maintenanceService.onSubjectChanges(subject);
   }
 
   get isAcademicYear() {

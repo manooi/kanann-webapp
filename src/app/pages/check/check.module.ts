@@ -21,6 +21,6 @@ const routes: Routes = [
     SharedModule,
     MaterialModule
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class CheckModule { }
