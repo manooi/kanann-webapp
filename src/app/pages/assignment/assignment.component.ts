@@ -8,9 +8,8 @@ import { Subject } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { AppConstant } from 'src/app/config/app.constant';
 import { AssignmentService } from 'src/app/shared/service/api/assignment.service';
-import { CheckService } from 'src/app/shared/service/api/check.service';
 import { AlertService } from 'src/app/shared/service/utility/alert.service';
-import { CreateDialogComponent } from './create-dialog/create-dialog.component';
+import { CreateDialogComponent, PageType } from './create-dialog/create-dialog.component';
 
 @Component({
   selector: 'app-assignment',
@@ -18,6 +17,7 @@ import { CreateDialogComponent } from './create-dialog/create-dialog.component';
   styleUrls: ['./assignment.component.scss']
 })
 export class AssignmentComponent implements OnInit {
+
   assignmentForm!: FormGroup;
   assignmentDropdown$ = this.assignmentService.assignmentDropdown$;
 
@@ -88,7 +88,7 @@ export class AssignmentComponent implements OnInit {
 
   create() {
     this.dialog.open(CreateDialogComponent, {
-      data: this.assignmentForm?.value,
+      data: { formValue: this.assignmentForm?.value, pageType: PageType.CREATE },
       width: "500px"
     });
   }
@@ -117,6 +117,19 @@ export class AssignmentComponent implements OnInit {
       },
       () => console.log("completed")
     );
+  }
+
+  edit(assignmentId: number) {
+    const param = {
+      academicYearId: this.isAcademicYear.value.value,
+      subjectCode: this.isSubject.value.subjectCode,
+      assignmentId: assignmentId 
+    };
+
+    this.dialog.open(CreateDialogComponent, {
+      data: { formValue: this.assignmentForm?.value, pageType: PageType.EDIT, searchParam: param  },
+      width: "500px"
+    });
   }
 
   delete(assignmentId: number) {

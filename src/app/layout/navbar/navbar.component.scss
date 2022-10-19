@@ -1,7 +1,21 @@
+@import '../layout.config.scss';
+
+.nav-bar {
+  min-height: $nav-bar-height;
+  width: 100%;
+}
+
+.logo {
+  font-family: 'Itim';
+  font-size: 1.5em;
+  // letter-spacing: 2.5px;
+  margin-left: 0.5em;
+}
+
 .spacer {
   flex: 1 1 auto;
 }
 
 .mat-toolbar.mat-primary {
-  background: rgb(53, 88, 193);
+  // background: rgb(53, 88, 193);
 }

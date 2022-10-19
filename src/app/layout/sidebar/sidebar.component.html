@@ -1,10 +1,20 @@
-<mat-list>
+<mat-nav-list [disableRipple]="true">
   <h2 class="mt-3 pl-2" style="">ผู้ดูแลระบบ</h2>
-  <mat-list-item style="cursor:pointer" routerLink="/maintenance/database" routerLinkActive="active"><mat-icon class="mr-2">settings</mat-icon>จัดการฐานข้อมูล </mat-list-item>
-  <!-- <mat-list-item style="cursor:pointer" routerLink="/maintenance/users-and-roles"> จัดการ User </mat-list-item> -->
+  <a mat-list-item style="cursor:pointer" routerLink="/maintenance/database" routerLinkActive="active">
+    <mat-icon class="mr-2">settings</mat-icon>จัดการฐานข้อมูล
+  </a>
+  <!-- <a mat-list-item style="cursor:pointer" routerLink="/maintenance/users-and-roles"> จัดการ User </a> -->
   <h2 class="mt-3 pl-2" style="">ครู</h2>
-  <mat-list-item style="cursor:pointer" routerLink="/check" routerLinkActive="active"><mat-icon class="mr-2">access_time</mat-icon> เช็คชื่อเข้าเรียน </mat-list-item>
-  <mat-list-item style="cursor:pointer" routerLink="/assignment" routerLinkActive="active"><mat-icon class="mr-2">article</mat-icon> จัดการใบงาน</mat-list-item>
-  <mat-list-item style="cursor:pointer" routerLink="/scoring" routerLinkActive="active"><mat-icon class="mr-2">face</mat-icon> จัดการคะแนน </mat-list-item>
-  <mat-list-item style="cursor:pointer" routerLink="/dashboard" routerLinkActive="active"><mat-icon class="mr-2">dashboard</mat-icon> Dashbord </mat-list-item>
-</mat-list>
+  <a mat-list-item style="cursor:pointer" routerLink="/check" routerLinkActive="active">
+    <mat-icon class="mr-2">access_time</mat-icon> เช็คชื่อเข้าเรียน
+  </a>
+  <a mat-list-item style="cursor:pointer" routerLink="/assignment" routerLinkActive="active">
+    <mat-icon class="mr-2">article</mat-icon> จัดการใบงาน
+  </a>
+  <a mat-list-item style="cursor:pointer" routerLink="/scoring" routerLinkActive="active">
+    <mat-icon class="mr-2">face</mat-icon> จัดการคะแนน
+  </a>
+  <a mat-list-item style="cursor:pointer" routerLink="/dashboard" routerLinkActive="active">
+    <mat-icon class="mr-2">dashboard</mat-icon> Dashbord
+  </a>
+</mat-nav-list>

@@ -2,5 +2,8 @@
   color: rgb(61 87 186);
   background-color: #e5e8f4;
   border-radius: 0px 15px 15px 0px;
+}
 
+:host ::ng-deep .mat-list-item:focus  {
+  background-color: #e5e8f4 !important;
 }

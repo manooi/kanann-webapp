@@ -5,8 +5,8 @@
       <h2>ห้องเรียน {{data?.classRoomName}}</h2>
     </div>
     <div class="col text-right">
-      <button mat-raised-button color="success" style="width: 150px" (click)="save()"
-        [disabled]="!isFormReady()">บันทึก</button>
+      <button mat-raised-button color="success" style="width: 150px" (click)="save()" [disabled]="!isFormReady()"
+        type="submit">บันทึก</button>
     </div>
   </div>
   <ng-container formArrayName="assignment">
@@ -18,10 +18,11 @@
         <th *ngFor="let assignment of data?.assignmentHeaders">{{assignment.assignmentName}}
           <br>({{assignment.totalScore}})
         </th>
+        <th rowspan="2">คะแนนรวม<br>({{totalScore}})</th>
       </tr>
       <tr>
-        <th class="subject" *ngFor="let _ of data?.assignmentHeaders; let i = index" [formGroupName]="i">
-          <input type="checkbox" formControlName="checkBox">
+        <th class="subject" *ngFor="let _ of data?.assignmentHeaders; let ci = index" [formGroupName]="ci">
+          <input type="checkbox" formControlName="checkBox" (change)="onCheckboxChecked(ci)">
         </th>
       </tr>
       <tr *ngFor="let student of data?.assignmentHeaders[0]?.scores; let seq = index">
@@ -30,15 +31,18 @@
         <td class="name"><span class="pl-2"></span>{{student.firstName}} {{student.lastName}}</td>
 
         <td *ngFor="let fg of isAssignment.controls; let i = index" [formGroupName]="i" class="score-input">
-          <!-- <td *ngFor="let _ of data?.assignmentHeaders; let i = index" [formGroupName]="i"> -->
           <ng-container formArrayName="score">
-            <div [formGroupName]="seq">
-              <input type="number" formControlName="score" [min]="0" [readonly]="isReadOnly(i)"
-                [tabindex]="getTabIndex(i)">
+            <div [formGroupName]="seq" >
+              <input type="number" formControlName="score" [min]="0" [ngClass]="{'zero':$any(fg)?.getRawValue().score[seq].score == 0}">
               <p *ngIf="!getAssignmentFormControl(i, seq).valid && getAssignmentFormControl(i, seq).enabled"
                 style="color: red">invalid</p>
             </div>
           </ng-container>
+        </td>
+        <td class="text-right" style="font-weight: bolder">
+          <span class="pr-2">
+            {{getEachStudentTotalScore(student.studentId)}}
+          </span>
         </td>
       </tr>
     </table>

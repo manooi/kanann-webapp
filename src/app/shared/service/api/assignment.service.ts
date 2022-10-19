@@ -26,14 +26,23 @@ export class AssignmentService extends CommonService {
     );
 
   getAssignment(param: any) {
-    const queryParam = new HttpParams()
+    let queryParam = new HttpParams()
       .set('academicYearId', param.academicYearId)
       .set('subjectCode', param.subjectCode)
+
+    if (param.assignmentId) {
+      queryParam = queryParam.set('assignmentId', param.assignmentId);
+    }
+
     return this.http.get('https://localhost:5000/Assignment/Assignment', { params: queryParam });
   }
 
   createAssignment(param: any) {
     return this.http.post('https://localhost:5000/Assignment/Assignment', param);
+  }
+
+  updateAssignment(assignmentId: number, param: any) {
+    return this.http.put(`https://localhost:5000/Assignment/Assignment/${assignmentId}`, param);
   }
 
   deleteAssignment(assignmentId: number) {

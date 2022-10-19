@@ -127,7 +127,9 @@ export class ClassComponent implements OnInit {
   getNoOfStudents(status: number) {
     let count = 0;
     for (let i = 0; i < this.isStatus.controls.length; i++) {
-      const formStatus = this.isStatus.at(i).value.attendanceStatus;
+      const formArray = this.isStatus.at(i) as FormArray;
+      const formStatus = (formArray.getRawValue() as any).attendanceStatus;
+      // const formStatus = this.isStatus.at(i).value.attendanceStatus;
       if (formStatus == status) {
         count += 1;
       }

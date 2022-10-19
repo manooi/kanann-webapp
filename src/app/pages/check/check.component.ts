@@ -9,6 +9,7 @@ import { CommonService } from 'src/app/shared/service/api/common.service';
 import { AlertService } from 'src/app/shared/service/utility/alert.service';
 import cloneDeep from "lodash/cloneDeep";
 import { MaintenanceService } from 'src/app/shared/service/api/maintenance.service';
+import { DateTimeUtil } from 'src/app/class/utility/datetime-util';
 
 export interface Student {
   studentId: number;
@@ -71,6 +72,10 @@ export class CheckComponent implements OnInit {
 
   ngOnInit(): void {
 
+  }
+
+  convertDate(date:any) {
+    return DateTimeUtil.convertDateForSort(date);
   }
 
   onAcademicYearChanges(academicYear: string) {

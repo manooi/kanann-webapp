@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, iif, of } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators'
+import { catchError, map, shareReplay, switchMap, tap } from 'rxjs/operators'
 import { Dropdown } from 'src/app/model/dropdown';
 
 @Injectable({ providedIn: 'root' })
@@ -48,7 +48,7 @@ export class CommonService {
 
   getClassRoom(subjectCode: string, academicYearId: string) {
     const queryParam = new HttpParams().set('academicYearId', academicYearId).set('subjectCode', subjectCode);
-    return this.http.get<any[]>('https://localhost:5000/Common/ClassRoom', { params: queryParam }).pipe(map((i: any) => i.result));
+    return this.http.get<any[]>('https://localhost:5000/Common/ClassRoom', { params: queryParam }).pipe(map((i: any) => i.result), shareReplay(1));
   }
 
   onAcademicYearChanges(academicYear: string) {

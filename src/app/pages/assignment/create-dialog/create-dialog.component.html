@@ -1,9 +1,9 @@
-<h1 mat-dialog-title>สร้างใบงานใหม่</h1>
+<h1 mat-dialog-title> {{data?.pageType == 0 ? 'สร้างใบงานใหม่':'แก้ไข'}}</h1>
 
 <div mat-dialog-content>
 
-  <h3>ปีการศึกษา {{data?.academicYear.text}}</h3>
-  <h3>วิชา {{data.subject.subjectCode}} - {{data.subject.subjectName}}</h3>
+  <h3>ปีการศึกษา {{data?.formValue.academicYear.text}}</h3>
+  <h3>วิชา {{data?.formValue.subject.subjectCode}} - {{data?.formValue.subject.subjectName}}</h3>
   <form [formGroup]="createAssignmentForm" novalidate>
     <div class="grid">
       <div class="col-12">
@@ -34,7 +34,7 @@
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>ห้องเรียน</mat-label>
           <mat-select multiple formControlName="assignedClassRooms">
-            <mat-option *ngFor="let classRoom of (classRoom$ | async)" [value]="classRoom">{{classRoom.text}}
+            <mat-option *ngFor="let classRoom of (classRoom$ | async)" [value]="classRoom.value">{{classRoom.text}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -46,6 +46,8 @@
 <!-- <pre>{{createAssignmentForm.value | json}}</pre> -->
 
 <div mat-dialog-actions>
-  <button mat-raised-button color="success" [disabled]="!createAssignmentForm?.valid" (click)="create()">สร้าง</button>
+  <button *ngIf="pageType == 0" mat-raised-button color="success" [disabled]="!isFormValid" (click)="create()">สร้าง</button>
+  <button *ngIf="pageType == 1" mat-raised-button color="success" [disabled]="!isFormValid" (click)="edit()">บันทึก</button>
   <button mat-raised-button color="warn" mat-dialog-close>ยกเลิก</button>
+  <!-- <button (click)="debug()">button</button> -->
 </div>

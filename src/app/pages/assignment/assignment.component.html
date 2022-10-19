@@ -62,10 +62,10 @@
             </mat-chip-list>
           </td>
           <td>
-            <a [routerLink]="['/check/view', 1]" target="_blank">
+            <a target="_blank">
               <mat-icon>visibility</mat-icon>
             </a>
-            <a [routerLink]="['/check/edit', 1]" target="_blank" class="ml-2">
+            <a target="_blank" class="ml-2" (click)="edit(dt.assignmentId)">
               <mat-icon>edit</mat-icon>
             </a>
             <a class="ml-2">

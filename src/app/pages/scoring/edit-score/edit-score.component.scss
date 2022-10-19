@@ -33,13 +33,18 @@ input {
   width: 50%;
 }
 
-input:read-only {
-  background-color: rgba(239, 239, 239, 0.3);
-  border-color: rgba(118, 118, 118, 0.3);
-  color: rgb(120, 120, 120) ;
-  border-radius: 3px;
-}
+// input:read-only {
+//   background-color: rgba(239, 239, 239, 0.3);
+//   border-color: rgba(118, 118, 118, 0.3);
+//   color: rgb(120, 120, 120) ;
+//   border-radius: 3px;
+// }
 
 .score-input {
   text-align: center;
+}
+
+.zero {
+  font-weight: bolder;
+  color: red;
 }

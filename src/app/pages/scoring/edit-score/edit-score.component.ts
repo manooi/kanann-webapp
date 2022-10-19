@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { delay } from 'rxjs/operators';
 import { ScoringService } from 'src/app/shared/service/api/scoring.service';
 import { AlertService } from 'src/app/shared/service/utility/alert.service';
+
 
 @Component({
   templateUrl: './edit-score.component.html',
@@ -13,6 +14,7 @@ import { AlertService } from 'src/app/shared/service/utility/alert.service';
 export class EditScoreComponent implements OnInit {
   data: any;
   editscoreForm!: FormGroup;
+  totalScore: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,6 +41,7 @@ export class EditScoreComponent implements OnInit {
         this.data.assignmentHeaders.forEach((assignment: any, index: number) => {
           // add assignment
           this.addAssignment({ assignmentMappingId: assignment.assignmentMappingId, assignmentName: assignment.assignmentName });
+          this.totalScore += assignment.totalScore;
 
           assignment.scores.forEach((score: any) => {
             const param = {
@@ -86,9 +89,9 @@ export class EditScoreComponent implements OnInit {
 
   addScore(index: number, param: any) {
     const form = this.fb.group({
-      assignmentMappingId: [param.assignmentMappingId],
-      score: [{ value: param.score, disabled: false }, [Validators.min(0), Validators.max(param.totalScore)]],
-      studentId: [param.studentId]
+      assignmentMappingId: [param.assignmentMappingId, { updateOn: 'blur' }],
+      score: [{ value: param.score, disabled: true }, { validators: [Validators.min(0), Validators.max(param.totalScore)], updateOn: 'change' }],
+      studentId: [param.studentId, { updateOn: 'blur' }]
     });
     this.getAssignmentScoreArray(index).push(form);
   }
@@ -118,9 +121,26 @@ export class EditScoreComponent implements OnInit {
     return this.editscoreForm.valid && (this.editscoreForm.dirty);
   }
 
+  onCheckboxChecked(assignmentIndex: number) {
+    const isChecked = this.getAssignmentAtIndex(assignmentIndex).value.checkBox;
+    if (!isChecked) {
+      this.getAssignmentScoreArray(assignmentIndex).disable();
+    }
+    else {
+      this.getAssignmentScoreArray(assignmentIndex).enable();
+    }
+  }
+
+  getEachStudentTotalScore(studentId: string) {
+    const score = this.editscoreForm.getRawValue().assignment.flatMap((i: any) => i.score).filter((i: any) => i.studentId == studentId);
+    return score.reduce((prev: any, cur: any) => {
+      return prev + cur.score;
+    }, 0);
+  }
+
   save() {
     this.spinner.show();
-    const score = { scores: this.editscoreForm.value.assignment.flatMap((i: any) => i.score) };
+    const score = { scores: this.editscoreForm.getRawValue().assignment.flatMap((i: any) => i.score) };
     this.scoringService.updateScore(score).pipe(delay(500)).subscribe(
       (data) => {
         this.spinner.hide();
@@ -138,6 +158,6 @@ export class EditScoreComponent implements OnInit {
 
   debug() {
     console.log(this.editscoreForm);
-    this.getAssignmentAtIndex(0).get('score')?.disable();
+    // this.getAssignmentAtIndex(0).get('score')?.disable();
   }
 }

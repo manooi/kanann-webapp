@@ -1,18 +1,39 @@
-.layout {
-  // background-color: rgb(217, 227, 237) !important;
-  // margin: 0 15% 0 15%;
+@import './layout.config.scss';
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
 }
 
 .main-content {
+  // style
   background-color: #ffffff !important;
-  min-height: 100vh !important;
-  padding: 16px 16px 0 16px;
+  padding-left: 0.75em;
+  padding-bottom: 1em;
+  // border: 2px solid red;
+
+  // position
+  position: fixed;
+  top: $nav-bar-height;
+  width: calc(100% - 250px);
+  height: calc(100% - 64px);
+  overflow-y: scroll;
 }
 
 .side-bar {
-  width: 300px !important;
+  // width
+  min-width: $side-bar-width;
+  max-width: $side-bar-width;
+
+  // style
   background-color: rgb(250, 250, 250);
   border: 0px;
+
+  // position
+  position: fixed;
+  top: $nav-bar-height;
+  bottom: 0;
 }
 
 // @media screen and (max-width: 1200px)   {
@@ -20,9 +41,3 @@
 //     margin: 0 0% 0 0%;
 //   } 
 // }
-
-:host ::ng-deep {
-  .mat-toolbar.mat-primary {
-    // background: rgb(55, 96, 207) !important;
-  }
-}

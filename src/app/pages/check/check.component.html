@@ -2,13 +2,7 @@
   <mat-icon style="font-size: 0.8em" class="mr-2">access_time</mat-icon> เช็คชื่อเข้าเรียน
 </h1>
 
-<!-- <mat-card>
-  <mat-card-title>
-    <mat-icon>timer</mat-icon><span class="ml-3">เช็คชื่อเข้าเรียน</span>
-  </mat-card-title>
-</mat-card> -->
-
-<mat-card class="mt-3">
+<mat-card>
   <form [formGroup]="maintainForm" *ngIf="(maintainDropdown$ | async) as dropdownData">
     <div class="selection-box">
       <div class="selection-item">
@@ -49,34 +43,43 @@
       </div>
     </div>
     <button mat-raised-button color="primary" (click)="search()" [disabled]="!maintainForm.valid">ค้นหา</button>
-    <button mat-raised-button class="ml-2" color="success" (click)="create()" [disabled]="!maintainForm.valid && false">สร้าง</button>
+    <button mat-raised-button class="ml-2" color="success" (click)="create()"
+      [disabled]="!maintainForm.valid">สร้าง</button>
   </form>
   <!-- <pre>{{maintainForm.value| json}}</pre> -->
 </mat-card>
 
 <!-- <button (click)="debug()">button</button> -->
 
-<mat-card class="mt-3" *ngIf="data?.length > 0">
-  <table datatable [dtOptions]="dtOptions" class="cell-border compact stripe">
+<!-- <mat-card class="mt-3" *ngIf="data?.length > 0"> -->
+<div *ngIf="data?.length > 0" class="mt-5">
+  <table datatable [dtOptions]="dtOptions" class="cell-border compact stripe hover">
     <thead>
       <tr>
         <th>วันที่</th>
-        <th>ห้องเรียน</th>
         <th>เวลา</th>
+        <th>ห้องเรียน</th>
         <th>เมนู</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let dt of data; let i = index">
-        <td>{{dt.startDate | date}}</td>
-        <td>{{dt.classRoomName}}</td>
+        <td [attr.data-sort]="convertDate(dt.startDate)">{{dt.startDate | date}}</td>
         <td>{{dt.startDate | date: 'mediumTime'}}</td>
+        <td>{{dt.classRoomName}}</td>
         <td>
-          <a [routerLink]="['/check/view', dt.transactionClassId]" target="_blank"><mat-icon>visibility</mat-icon></a>
-          <a [routerLink]="['/check/edit', dt.transactionClassId]" target="_blank" class="ml-2"><mat-icon>edit</mat-icon></a>
-          </td>
+          <a [routerLink]="['/check/view', dt.transactionClassId]" target="_blank">
+            <!-- <mat-icon>visibility</mat-icon> -->
+            ดู
+          </a>
+          <a [routerLink]="['/check/edit', dt.transactionClassId]" target="_blank" class="ml-2">
+            <!-- <mat-icon>edit</mat-icon> -->
+            เช็คชื่อ
+          </a>
+        </td>
       </tr>
     </tbody>
   </table>
-</mat-card>
+</div>
+<!-- </mat-card> -->
 <!-- <button (click)="debug()">button</button> -->
