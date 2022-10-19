@@ -8,7 +8,7 @@
       <app-sidebar></app-sidebar>
     </mat-drawer>
     <mat-drawer-content>
-      <div class="main-content">
+      <div [ngClass]="{'main-content':savedStateService.sideBarState, 'collapse': !savedStateService.sideBarState}">
         <router-outlet></router-outlet>
       </div>
     </mat-drawer-content>

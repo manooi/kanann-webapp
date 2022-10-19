@@ -8,8 +8,7 @@
 
 .main-content {
   // style
-   background-color: #eef0f5 !important;
-  //  background-color: #f1f3f9 !important;
+  background-color: #eef0f5;
   padding: 0.5em 0 0 0.5em;
   // border: 2px solid red;
 
@@ -17,6 +16,18 @@
   position: fixed;
   top: $nav-bar-height;
   width: calc(100% - 250px);
+  height: calc(100% - 64px);
+  overflow-y: scroll;
+}
+
+.collapse {
+  // style
+  background-color: #eef0f5;
+  padding: 0.5em 0 0 0.5em;
+
+  position: fixed;
+  top: $nav-bar-height;
+  width: 100%;
   height: calc(100% - 64px);
   overflow-y: scroll;
 }
