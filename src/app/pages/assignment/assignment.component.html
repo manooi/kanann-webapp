@@ -1,78 +1,76 @@
-<mat-card>
-  <h1 class="mt-4" style="font-size: 2.5em">
-    <mat-icon style="font-size: 0.8em" class="mr-2">article</mat-icon> จัดการใบงาน
-  </h1>
-  <mat-divider></mat-divider>
+<h1 class="mt-4" style="font-size: 2.5em">
+  <mat-icon style="font-size: 0.8em" class="mr-2">article</mat-icon> จัดการใบงาน
+</h1>
+<mat-divider></mat-divider>
 
-  <form [formGroup]="assignmentForm" *ngIf="(assignmentDropdown$ | async) as dropdownData">
-    <div class="selection-box">
-      <div class="selection-item">
-        <h3>ปีการศึกษา</h3>
-        <mat-form-field appearance="fill">
-          <!-- <pre>{{dropdownData | json}}</pre> -->
-          <mat-label>เลือกปีการศึกษา</mat-label>
-          <mat-select (valueChange)="onAcademicYearChanges($event)" formControlName="academicYear">
-            <mat-option *ngFor="let year of $any(dropdownData)?.academics" [value]="year">
-              {{year.text}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="selection-item" *ngIf="$any(dropdownData)?.subjects.length > 0">
-        <h3>รายวิชา</h3>
-        <mat-form-field appearance="fill">
-          <mat-label>เลือกรายวิชา</mat-label>
-          <mat-select (valueChange)="onSubjectChanges($event)" formControlName="subject">
-            <mat-option *ngFor="let subject of $any(dropdownData)?.subjects" [value]="subject">
-              {{subject.subjectCode}} - {{subject.subjectName}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
+<form [formGroup]="assignmentForm" *ngIf="(assignmentDropdown$ | async) as dropdownData">
+  <div class="selection-box">
+    <div class="selection-item">
+      <h3>ปีการศึกษา</h3>
+      <mat-form-field appearance="fill">
+        <!-- <pre>{{dropdownData | json}}</pre> -->
+        <mat-label>เลือกปีการศึกษา</mat-label>
+        <mat-select (valueChange)="onAcademicYearChanges($event)" formControlName="academicYear">
+          <mat-option *ngFor="let year of $any(dropdownData)?.academics" [value]="year">
+            {{year.text}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
-    <button mat-raised-button color="primary" (click)="search()" [disabled]="!assignmentForm.valid">ค้นหา</button>
-    <button mat-raised-button class="ml-2" color="success" (click)="create()"
-      [disabled]="!assignmentForm.valid">สร้างใบงานใหม่</button>
-  </form>
 
-  <div class="mt-5" *ngIf="data?.length > 0">
-    <table datatable [dtOptions]="dtOptions" class="cell-border compact stripe">
-      <thead>
-        <tr>
-          <th>ชื่องาน</th>
-          <th>คะแนนเต็ม</th>
-          <!-- <th>วันที่สั่ง (min)</th> -->
-          <!-- <th>กำหนดส่ง (max)</th> -->
-          <th>ห้องที่สั่ง</th>
-          <th>เมนู</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let dt of data; let i = index">
-          <td>{{dt.assignmentName}}</td>
-          <td>{{dt.totalScore}}</td>
-          <!-- <td>{{dt.assignedDate | thaidate}}</td> -->
-          <!-- <td>{{dt.deadlineDate | thaidate}}</td> -->
-          <td>
-            <mat-chip-list aria-label="Fish selection">
-              <mat-chip *ngFor="let c of dt.assignedClassRooms">{{c.classRoomName}}</mat-chip>
-            </mat-chip-list>
-          </td>
-          <td>
-            <a target="_blank">
-              <mat-icon>visibility</mat-icon>
-            </a>
-            <a target="_blank" class="ml-2" (click)="edit(dt.assignmentId)">
-              <mat-icon>edit</mat-icon>
-            </a>
-            <a class="ml-2">
-              <mat-icon (click)="delete(dt.assignmentId)">delete</mat-icon>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="selection-item" *ngIf="$any(dropdownData)?.subjects.length > 0">
+      <h3>รายวิชา</h3>
+      <mat-form-field appearance="fill">
+        <mat-label>เลือกรายวิชา</mat-label>
+        <mat-select (valueChange)="onSubjectChanges($event)" formControlName="subject">
+          <mat-option *ngFor="let subject of $any(dropdownData)?.subjects" [value]="subject">
+            {{subject.subjectCode}} - {{subject.subjectName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
   </div>
-</mat-card>
+  <button mat-raised-button color="primary" (click)="search()" [disabled]="!assignmentForm.valid">ค้นหา</button>
+  <button mat-raised-button class="ml-2" color="success" (click)="create()"
+    [disabled]="!assignmentForm.valid">สร้างใบงานใหม่</button>
+</form>
+
+<div class="mt-5" *ngIf="data?.length > 0">
+  <table datatable [dtOptions]="dtOptions" class="cell-border compact stripe">
+    <thead>
+      <tr>
+        <th>ชื่องาน</th>
+        <th>คะแนนเต็ม</th>
+        <!-- <th>วันที่สั่ง (min)</th> -->
+        <!-- <th>กำหนดส่ง (max)</th> -->
+        <th>ห้องที่สั่ง</th>
+        <th>เมนู</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let dt of data; let i = index">
+        <td>{{dt.assignmentName}}</td>
+        <td>{{dt.totalScore}}</td>
+        <!-- <td>{{dt.assignedDate | thaidate}}</td> -->
+        <!-- <td>{{dt.deadlineDate | thaidate}}</td> -->
+        <td>
+          <mat-chip-list aria-label="Fish selection">
+            <mat-chip *ngFor="let c of dt.assignedClassRooms">{{c.classRoomName}}</mat-chip>
+          </mat-chip-list>
+        </td>
+        <td>
+          <a target="_blank">
+            <mat-icon>visibility</mat-icon>
+          </a>
+          <a target="_blank" class="ml-2" (click)="edit(dt.assignmentId)">
+            <mat-icon>edit</mat-icon>
+          </a>
+          <a class="ml-2">
+            <mat-icon (click)="delete(dt.assignmentId)">delete</mat-icon>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

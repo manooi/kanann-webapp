@@ -8,8 +8,8 @@
 
 .main-content {
   // style
-  background-color: #eef0f5;
-  padding: 0.5em 0 0 0.5em;
+  // background-color: #eef0f5;
+  padding: 0.5em 0em 0 1.5em;
   // border: 2px solid red;
 
   // position
@@ -22,8 +22,7 @@
 
 .collapse {
   // style
-  background-color: #eef0f5;
-  padding: 0.5em 0 0 0.5em;
+  padding: 2.5em 0 0 2.5em;
 
   position: fixed;
   top: $nav-bar-height;
@@ -39,7 +38,7 @@
 
   // style
   // background-color: rgb(250, 250, 250);
-  border: 0px;
+  // border: 0px;
 
   // position
   position: fixed;

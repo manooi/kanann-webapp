@@ -1,49 +1,47 @@
-<mat-card>
-  <h1 class="mt-4" style="font-size: 2.5em">
-    <mat-icon style="font-size: 0.8em" class="mr-2">face</mat-icon> จัดการคะแนน
-  </h1>
-  <mat-divider></mat-divider>
+<h1 class="mt-4" style="font-size: 2.5em">
+  <mat-icon style="font-size: 0.8em" class="mr-2">face</mat-icon> จัดการคะแนน
+</h1>
+<mat-divider></mat-divider>
 
-  <form [formGroup]="maintainForm" *ngIf="(maintainDropdown$ | async) as dropdownData">
-    <div class="selection-box">
-      <div class="selection-item">
-        <h3>ปีการศึกษา</h3>
-        <mat-form-field appearance="fill">
-          <!-- <pre>{{dropdownData | json}}</pre> -->
-          <mat-label>เลือกปีการศึกษา</mat-label>
-          <mat-select (valueChange)="onAcademicYearChanges($event)" formControlName="academicYear">
-            <mat-option *ngFor="let year of $any(dropdownData)?.academics" [value]="year.value">
-              {{year.text}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="selection-item" *ngIf="$any(dropdownData)?.subjects.length > 0">
-        <h3>รายวิชา</h3>
-        <mat-form-field appearance="fill">
-          <mat-label>เลือกรายวิชา</mat-label>
-          <mat-select (valueChange)="onSubjectChanges($event)" formControlName="subject">
-            <mat-option *ngFor="let subject of $any(dropdownData)?.subjects " [value]="subject.subjectCode">
-              {{subject.subjectCode}} - {{subject.subjectName}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="selection-item" *ngIf="$any(dropdownData)?.classRooms.length > 0">
-        <h3>ห้องเรียน</h3>
-        <mat-form-field appearance="fill">
-          <mat-label>เลือกห้องเรียน</mat-label>
-          <mat-select formControlName="classRoom">
-            <mat-option *ngFor="let classRoom of $any(dropdownData)?.classRooms " [value]="classRoom.value">
-              {{classRoom.text}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+<form [formGroup]="maintainForm" *ngIf="(maintainDropdown$ | async) as dropdownData">
+  <div class="selection-box">
+    <div class="selection-item">
+      <h3>ปีการศึกษา</h3>
+      <mat-form-field appearance="fill">
+        <!-- <pre>{{dropdownData | json}}</pre> -->
+        <mat-label>เลือกปีการศึกษา</mat-label>
+        <mat-select (valueChange)="onAcademicYearChanges($event)" formControlName="academicYear">
+          <mat-option *ngFor="let year of $any(dropdownData)?.academics" [value]="year.value">
+            {{year.text}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
-    <button mat-raised-button color="primary" (click)="search()" [disabled]="!maintainForm.valid">ค้นหา</button>
-  </form>
-  <!-- <pre>{{maintainForm.value| json}}</pre> -->
-</mat-card>
+
+    <div class="selection-item" *ngIf="$any(dropdownData)?.subjects.length > 0">
+      <h3>รายวิชา</h3>
+      <mat-form-field appearance="fill">
+        <mat-label>เลือกรายวิชา</mat-label>
+        <mat-select (valueChange)="onSubjectChanges($event)" formControlName="subject">
+          <mat-option *ngFor="let subject of $any(dropdownData)?.subjects " [value]="subject.subjectCode">
+            {{subject.subjectCode}} - {{subject.subjectName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="selection-item" *ngIf="$any(dropdownData)?.classRooms.length > 0">
+      <h3>ห้องเรียน</h3>
+      <mat-form-field appearance="fill">
+        <mat-label>เลือกห้องเรียน</mat-label>
+        <mat-select formControlName="classRoom">
+          <mat-option *ngFor="let classRoom of $any(dropdownData)?.classRooms " [value]="classRoom.value">
+            {{classRoom.text}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <button mat-raised-button color="primary" (click)="search()" [disabled]="!maintainForm.valid">ค้นหา</button>
+</form>
+<!-- <pre>{{maintainForm.value| json}}</pre> -->
