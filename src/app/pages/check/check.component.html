@@ -1,8 +1,9 @@
-<h1 class="mt-4" style="font-size: 2.5em">
-  <mat-icon style="font-size: 0.8em" class="mr-2">access_time</mat-icon> เช็คชื่อเข้าเรียน
-</h1>
-
 <mat-card>
+  <h1 class="mt-4" style="font-size: 2.5em">
+    <mat-icon style="font-size: 0.8em" class="mr-2">access_time</mat-icon> เช็คชื่อเข้าเรียน
+  </h1>
+  <mat-divider></mat-divider>
+
   <form [formGroup]="maintainForm" *ngIf="(maintainDropdown$ | async) as dropdownData">
     <div class="selection-box">
       <div class="selection-item">
@@ -44,42 +45,43 @@
     </div>
     <button mat-raised-button color="primary" (click)="search()" [disabled]="!maintainForm.valid">ค้นหา</button>
     <button mat-raised-button class="ml-2" color="success" (click)="create()"
-      [disabled]="!maintainForm.valid">สร้าง</button>
+      [disabled]="!maintainForm.valid">สร้างใหม่</button>
   </form>
+
   <!-- <pre>{{maintainForm.value| json}}</pre> -->
+
+  <!-- <button (click)="debug()">button</button> -->
+
+  <!-- <mat-card class="mt-3" *ngIf="data?.length > 0"> -->
+  <div *ngIf="data?.length > 0" class="mt-5">
+    <table datatable [dtOptions]="dtOptions" class="cell-border compact stripe hover">
+      <thead>
+        <tr>
+          <th>วันที่</th>
+          <th>เวลา</th>
+          <th>ห้องเรียน</th>
+          <th>เมนู</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dt of data; let i = index">
+          <td [attr.data-sort]="convertDate(dt.startDate)">{{dt.startDate | date}}</td>
+          <td>{{dt.startDate | date: 'mediumTime'}}</td>
+          <td>{{dt.classRoomName}}</td>
+          <td>
+            <a [routerLink]="['/check/view', dt.transactionClassId]" target="_blank">
+              <!-- <mat-icon>visibility</mat-icon> -->
+              ดู
+            </a>
+            <a [routerLink]="['/check/edit', dt.transactionClassId]" target="_blank" class="ml-2">
+              <!-- <mat-icon>edit</mat-icon> -->
+              เช็คชื่อ
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- </mat-card> -->
+  <!-- <button (click)="debug()">button</button> -->
 </mat-card>
-
-<!-- <button (click)="debug()">button</button> -->
-
-<!-- <mat-card class="mt-3" *ngIf="data?.length > 0"> -->
-<div *ngIf="data?.length > 0" class="mt-5">
-  <table datatable [dtOptions]="dtOptions" class="cell-border compact stripe hover">
-    <thead>
-      <tr>
-        <th>วันที่</th>
-        <th>เวลา</th>
-        <th>ห้องเรียน</th>
-        <th>เมนู</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let dt of data; let i = index">
-        <td [attr.data-sort]="convertDate(dt.startDate)">{{dt.startDate | date}}</td>
-        <td>{{dt.startDate | date: 'mediumTime'}}</td>
-        <td>{{dt.classRoomName}}</td>
-        <td>
-          <a [routerLink]="['/check/view', dt.transactionClassId]" target="_blank">
-            <!-- <mat-icon>visibility</mat-icon> -->
-            ดู
-          </a>
-          <a [routerLink]="['/check/edit', dt.transactionClassId]" target="_blank" class="ml-2">
-            <!-- <mat-icon>edit</mat-icon> -->
-            เช็คชื่อ
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<!-- </mat-card> -->
-<!-- <button (click)="debug()">button</button> -->

@@ -1,8 +1,9 @@
-<h1 class="mt-4" style="font-size: 2.5em">
-  <mat-icon style="font-size: 0.8em" class="mr-2">face</mat-icon> จัดการคะแนน
-</h1>
+<mat-card>
+  <h1 class="mt-4" style="font-size: 2.5em">
+    <mat-icon style="font-size: 0.8em" class="mr-2">face</mat-icon> จัดการคะแนน
+  </h1>
+  <mat-divider></mat-divider>
 
-<mat-card class="mt-3">
   <form [formGroup]="maintainForm" *ngIf="(maintainDropdown$ | async) as dropdownData">
     <div class="selection-box">
       <div class="selection-item">
@@ -43,9 +44,6 @@
       </div>
     </div>
     <button mat-raised-button color="primary" (click)="search()" [disabled]="!maintainForm.valid">ค้นหา</button>
-    <!-- <button mat-raised-button class="ml-2" color="success" (click)="create()"
-      [disabled]="!maintainForm.valid && false">สร้าง</button> -->
   </form>
   <!-- <pre>{{maintainForm.value| json}}</pre> -->
 </mat-card>
-

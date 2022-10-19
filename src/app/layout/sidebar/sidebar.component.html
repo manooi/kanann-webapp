@@ -1,10 +1,10 @@
 <mat-nav-list [disableRipple]="true">
-  <h2 class="mt-3 pl-2" style="">ผู้ดูแลระบบ</h2>
+  <h2 class="mt-3 pl-2">ผู้ดูแลระบบ</h2>
   <a mat-list-item style="cursor:pointer" routerLink="/maintenance/database" routerLinkActive="active">
     <mat-icon class="mr-2">settings</mat-icon>จัดการฐานข้อมูล
   </a>
-  <!-- <a mat-list-item style="cursor:pointer" routerLink="/maintenance/users-and-roles"> จัดการ User </a> -->
-  <h2 class="mt-3 pl-2" style="">ครู</h2>
+
+  <h2 class="mt-3 pl-2">ครู</h2>
   <a mat-list-item style="cursor:pointer" routerLink="/check" routerLinkActive="active">
     <mat-icon class="mr-2">access_time</mat-icon> เช็คชื่อเข้าเรียน
   </a>
@@ -17,4 +17,13 @@
   <a mat-list-item style="cursor:pointer" routerLink="/dashboard" routerLinkActive="active">
     <mat-icon class="mr-2">dashboard</mat-icon> Dashbord
   </a>
+
+  <h2 class="mt-3 pl-2">นักเรียน</h2>
+  <a mat-list-item style="cursor:pointer">
+    <mat-icon class="mr-2">access_time</mat-icon> เวลาเข้าเรียน
+  </a>
+  <a mat-list-item style="cursor:pointer">
+    <mat-icon class="mr-2">math</mat-icon> คะแนน
+  </a>
+
 </mat-nav-list>

@@ -111,7 +111,6 @@ export class ViewComponent implements OnInit {
     return this.isDataBase()?.value && this.isDataBase()?.value !== '1' && this.isDataBase()?.value !== '2';
   }
 
-
   debug() {
     console.log(this.maintainViewForm);
     // console.log(this.selectedTabIndex);
