@@ -31,5 +31,5 @@ deploy_master:
     - echo "$PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   script:
-    - scp -r dist/kanann/* kanann@$SERVER_IP:/var/www/html/
+    - sudo scp -r dist/kanann/* kanann@$SERVER_IP:/var/www/html/
   only: ['main']
