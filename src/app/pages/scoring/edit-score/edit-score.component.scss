@@ -4,12 +4,12 @@ td {
   border: 0.75px solid black;
 }
 
-table {
-  // border-collapse: collapse;
-}
-
 th {
   vertical-align: top;
+}
+
+td {
+  padding: 3px;
 }
 
 .subject {
@@ -25,20 +25,9 @@ th {
   width: 175px;
 }
 
-td {
-  padding: 3px;
-}
-
 input {
   width: 50%;
 }
-
-// input:read-only {
-//   background-color: rgba(239, 239, 239, 0.3);
-//   border-color: rgba(118, 118, 118, 0.3);
-//   color: rgb(120, 120, 120) ;
-//   border-radius: 3px;
-// }
 
 .score-input {
   text-align: center;
