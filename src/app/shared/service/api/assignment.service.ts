@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { combineLatest, Subject } from 'rxjs';
 import { map } from 'rxjs/operators'
+import { environment } from 'src/environments/environment';
 import { CommonService } from './common.service';
 
 @Injectable()
@@ -34,19 +35,19 @@ export class AssignmentService extends CommonService {
       queryParam = queryParam.set('assignmentId', param.assignmentId);
     }
 
-    return this.http.get('https://localhost:5000/Assignment/Assignment', { params: queryParam });
+    return this.http.get(environment.apiUrl + '/Assignment/Assignment', { params: queryParam });
   }
 
   createAssignment(param: any) {
-    return this.http.post('https://localhost:5000/Assignment/Assignment', param);
+    return this.http.post(environment.apiUrl + '/Assignment/Assignment', param);
   }
 
   updateAssignment(assignmentId: number, param: any) {
-    return this.http.put(`https://localhost:5000/Assignment/Assignment/${assignmentId}`, param);
+    return this.http.put(`${environment.apiUrl}/Assignment/Assignment/${assignmentId}`, param);
   }
 
   deleteAssignment(assignmentId: number) {
-    return this.http.delete(`https://localhost:5000/Assignment/Assignment/${assignmentId}`);
+    return this.http.delete(`${environment.apiUrl}/Assignment/Assignment/${assignmentId}`);
   }
 
   private createdSubject = new Subject();

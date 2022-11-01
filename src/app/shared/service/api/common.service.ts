@@ -3,14 +3,15 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, iif, of } from 'rxjs';
 import { catchError, map, shareReplay, switchMap, tap } from 'rxjs/operators'
 import { Dropdown } from 'src/app/model/dropdown';
+import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class CommonService {
   selectedProvince$: any;
   constructor(public http: HttpClient) { }
 
-  academicYear$ = this.http.get<any[]>('https://localhost:5000/Common/AcademicYear').pipe(map((i: any) => i.result));
-  masterType$ = this.http.get<Dropdown[]>('https://localhost:5000/Common/MasterName').pipe(map((i: any) => i.result));
+  academicYear$ = this.http.get<any[]>(environment.apiUrl + '/Common/AcademicYear').pipe(map((i: any) => i.result));
+  masterType$ = this.http.get<Dropdown[]>(environment.apiUrl + '/Common/MasterName').pipe(map((i: any) => i.result));
 
   private academicYearSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   selectedAcademicYear$ = this.academicYearSubject.asObservable();
@@ -33,14 +34,14 @@ export class CommonService {
   );
 
   getSubjectByAcademicYear(params: any) {
-    return this.http.post<any[]>('https://localhost:5000/Common/GetSubjectByAcademicYear', params).pipe(map((i: any) => i.result));
+    return this.http.post<any[]>(environment.apiUrl + '/Common/GetSubjectByAcademicYear', params).pipe(map((i: any) => i.result));
   }
 
   getClassRoomBySubjectAndAcademicYear(subjectCode: string) {
     return this.selectedAcademicYear$.pipe(
       switchMap((academicYearId) => {
         const queryParam = new HttpParams().set('academicYearId', academicYearId).set('subjectCode', subjectCode);
-        return this.http.get<any[]>('https://localhost:5000/Common/ClassRoom', { params: queryParam }).pipe(map((i: any) => i.result));
+        return this.http.get<any[]>(environment.apiUrl + '/Common/ClassRoom', { params: queryParam }).pipe(map((i: any) => i.result));
       }),
       catchError(() => of([]))
     )
@@ -48,7 +49,7 @@ export class CommonService {
 
   getClassRoom(subjectCode: string, academicYearId: string) {
     const queryParam = new HttpParams().set('academicYearId', academicYearId).set('subjectCode', subjectCode);
-    return this.http.get<any[]>('https://localhost:5000/Common/ClassRoom', { params: queryParam }).pipe(map((i: any) => i.result), shareReplay(1));
+    return this.http.get<any[]>(environment.apiUrl + '/Common/ClassRoom', { params: queryParam }).pipe(map((i: any) => i.result), shareReplay(1));
   }
 
   onAcademicYearChanges(academicYear: string) {
@@ -60,6 +61,6 @@ export class CommonService {
   }
 
   getStudents() {
-    return this.http.post<any>('https://localhost:5000/Common/GetStudents', {});
+    return this.http.post<any>(environment.apiUrl + '/Common/GetStudents', {});
   }
 }
