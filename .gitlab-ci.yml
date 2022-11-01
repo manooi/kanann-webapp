@@ -15,7 +15,7 @@ build_master:
   stage: build
   script:
   - npm run build
-  only: ['master']
+  only: ['main']
   artifacts:
     paths:
       - dist/
@@ -31,5 +31,5 @@ deploy_master:
     - echo "$PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   script:
-    - scp -r dist/kanann/* ubuntu@$SERVER_IP:/home/ubuntu/www/
-  only: ['master']
+    - scp -r dist/kanann/* root@$SERVER_IP:/var/www/xn--42c6ba4gwd/
+  only: ['main']
