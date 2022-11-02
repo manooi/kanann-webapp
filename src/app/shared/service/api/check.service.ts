@@ -21,6 +21,11 @@ export class CheckService {
     return this.http.post(environment.apiUrl + '/Check/Class', param)
   }
 
+  removeTransaction(transactionClassId: number) {
+    return this.http.delete(environment.apiUrl + `/Check/Class/${transactionClassId}`);
+  }
+
+
   getClass(transactionClassId: number) {
     const queryParam = new HttpParams()
       .set("transactionClassId", transactionClassId);

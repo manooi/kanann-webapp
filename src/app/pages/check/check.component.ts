@@ -74,7 +74,7 @@ export class CheckComponent implements OnInit {
 
   }
 
-  convertDate(date:any) {
+  convertDate(date: any) {
     return DateTimeUtil.convertDateForSort(date);
   }
 
@@ -133,6 +133,16 @@ export class CheckComponent implements OnInit {
       },
       () => console.log("completed")
     );
+  }
 
+  deleleteClass(transactionClassId: number) {
+    this.checkService.removeTransaction(transactionClassId).subscribe(
+      (data) => {
+        this.alertService.success("ลบสำเร็จ", () => this.search());
+      },
+      (err) => {
+        this.alertService.error('error');
+      },
+    );
   }
 }
