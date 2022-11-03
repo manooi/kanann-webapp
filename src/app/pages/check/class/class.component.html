@@ -32,7 +32,7 @@
       <tbody>
         <ng-container formArrayName="status">
           <tr *ngFor="let dt of data; let i = index">
-            <td>{{i+1}}</td>
+            <td>{{dt.student.sequence}}</td>
             <td>{{dt.studentId}}</td>
             <td>{{dt.student.firstName}}</td>
             <td>{{dt.student.lastName}}</td>
