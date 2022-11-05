@@ -58,6 +58,7 @@
       <tr>
         <th>วันที่</th>
         <th>เวลา</th>
+        <th>คาบ</th>
         <th>ห้องเรียน</th>
         <th>เมนู</th>
       </tr>
@@ -66,6 +67,7 @@
       <tr *ngFor="let dt of data; let i = index">
         <td [attr.data-sort]="convertDate(dt.startDate)">{{dt.startDate | date}}</td>
         <td>{{dt.startDate | date: 'mediumTime'}}</td>
+        <td>{{dt.classWeight == 1 ? 'เดี่ยว' : 'คู่'}}</td>
         <td>{{dt.classRoomName}}</td>
         <td>
           <a [routerLink]="['/check/view', dt.transactionClassId]" target="_blank">

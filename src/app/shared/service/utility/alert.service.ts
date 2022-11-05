@@ -17,6 +17,20 @@ export class AlertService {
     })
   }
 
+  unauthoirzed(msg: string, callback?: any) {
+    Swal.fire({
+      title: '401',
+      html: `<html>${msg}</html>`,
+      icon: 'error',
+      confirmButtonText: 'Ok'
+    }).then((result) => {
+      if (result.isConfirmed && callback) {
+        callback();
+      }
+    })
+  }
+
+
   success(msg: string, callback?: any) {
     Swal.fire({
       title: 'Success',

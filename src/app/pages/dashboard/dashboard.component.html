@@ -1,0 +1,12 @@
+<h1 class="mt-4" style="font-size: 2.5em">
+  <mat-icon style="font-size: 0.8em" class="mr-2">dashboard</mat-icon> Dashboard
+</h1>
+<mat-divider></mat-divider>
+
+<div class="grid">
+  <div class="col-6">
+    <canvas baseChart [data]="barChartData" [options]="barChartOptions" [plugins]="barChartPlugins"
+      [legend]="barChartLegend" [type]="'bar'">
+    </canvas>
+  </div>
+</div>

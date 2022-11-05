@@ -3,6 +3,7 @@ export interface CreateTransactionRequest {
   subjectCode: string,
   classRoomId: number,
   startDateTime: Date,
+  classWeight: number
 }
 
 export interface GetClassResponse {

@@ -180,19 +180,13 @@ export class ClassComponent implements OnInit {
     };
 
     const reload = () => {
-      this.spinner.show();
-      setTimeout(() => {
-        window.location.reload();
-      }, (1000));
+      window.location.reload();
     };
 
     this.checkService.saveAttendance(param).subscribe(
       (data) => {
         this.spinner.hide();
-        this.alertService.success("บันทึกเวลาเรียนสำเร็จ");
-        this.form.markAsUntouched();
-        this.form.markAsPristine();
-        console.log("sub", data);
+        this.alertService.success("บันทึกเวลาเรียนสำเร็จ", () => reload());
       },
       (err) => {
         this.spinner.hide();
@@ -201,6 +195,36 @@ export class ClassComponent implements OnInit {
       },
     )
 
+  }
+
+  markAll() {
+    const currentTime = moment().utc();
+    for (let index = 0; index < this.isStatus.length; index++) {
+      this.eachFormGroup(index).patchValue({
+        attendanceStatus: '1',
+        attendTime: currentTime
+      });
+    }
+    this.form.markAllAsTouched();
+    this.form.updateValueAndValidity();
+  }
+
+  calculateEmoji(score: number) {
+    if (score == 1) {
+      return 0;
+    }
+
+    else if (score >= 0.8) {
+      return 1;
+    }
+
+    else if (score >= 0.5) {
+      return 2;
+    }
+
+    else {
+      return 3;
+    }
   }
 
 

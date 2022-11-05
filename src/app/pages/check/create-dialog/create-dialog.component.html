@@ -1,0 +1,18 @@
+<h1 mat-dialog-title> เช็คชื่อ</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="createAssignmentForm" novalidate>
+    <div style="height: 45px;" class="mt-2">
+      <mat-radio-group aria-label="Select an option" formControlName="classWeight">
+        <mat-radio-button value="1" color="primary">คาบเดี่ยว</mat-radio-button>
+        <mat-radio-button value="2" class="ml-4" color="primary">คาบคู่</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button color="success" [disabled]="!isFormValid" (click)="create()">สร้าง</button>
+  <button mat-raised-button color="warn" mat-dialog-close class="ml-2">ยกเลิก</button>
+  <!-- <button (click)="debug()">button</button> -->
+</div>

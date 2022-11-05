@@ -1,11 +1,12 @@
 <mat-toolbar color="primary" class="nav-bar">
   <button mat-icon-button class="example-icon" (click)="savedStateService.toggle()">
-    <mat-icon >menu</mat-icon>
+    <mat-icon>menu</mat-icon>
   </button>
-  <span routerLink="/" class="logo">คะแนน.com</span>
+  <span routerLink="/home" class="logo" style="cursor: pointer">คะแนน.com</span>
   <span class="spacer"></span>
 
-  <span>ครูกรทิพย์ มีนะรินทร์</span>
+  <span>{{givenName}}</span>
+  <mat-icon class="ml-3" style="cursor: pointer" (click)="logout()">logout</mat-icon>
 
   <!-- <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
     <mat-icon>favorite</mat-icon>

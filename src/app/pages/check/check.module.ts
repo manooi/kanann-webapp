@@ -4,6 +4,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { MaterialModule } from 'src/app/shared/material/material.module';
 import { RouterModule, Routes } from '@angular/router';
 import { ClassComponent } from './class/class.component';
+import { CreateDialogComponent } from './create-dialog/create-dialog.component';
 
 const routes: Routes = [
   { path: '', component: CheckComponent },
@@ -15,11 +16,12 @@ const routes: Routes = [
   declarations: [
     CheckComponent,
     ClassComponent,
+    CreateDialogComponent
   ],
   imports: [
     RouterModule.forChild(routes),
     SharedModule,
-    MaterialModule
+    MaterialModule,
   ],
   exports: [RouterModule],
 })

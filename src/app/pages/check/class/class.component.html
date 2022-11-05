@@ -4,11 +4,12 @@
 </h1>
 <h1>ห้อง {{header.classRoomName}}</h1>
 <h1>วันที่ {{header.classDate | thaidate}}</h1>
-<h2>RFID reader status <mat-icon [ngStyle]="{'color': $any((availableReader$ |async))?.count > 0 ? 'green' : 'red'}">tungsten</mat-icon>
-</h2>
-<hr>
+<!-- <h2>RFID reader status <mat-icon [ngStyle]="{'color': $any((availableReader$ |async))?.count > 0 ? 'green' : 'red'}">
+    tungsten</mat-icon>
+</h2> -->
 
-<div class="text-right mb-3">
+<div class="text-right mb-3" *ngIf="isEdit">
+  <button mat-raised-button class="mr-3" (click)="markAll()">มาครบ</button>
   <button mat-raised-button color="success" style="width: 150px" (click)="save()"
     [disabled]="!isFormTouchedOrDirty()">บันทึก</button>
 </div>
@@ -23,6 +24,7 @@
           <th>ชื่อ</th>
           <th>สกุล</th>
           <th>เวลาที่บันทึก</th>
+          <th class="text-center">% การเข้าเรียน</th>
           <th style="color:green">มา {{getNoOfStudents(1)}}</th>
           <th style="color:orange">สาย {{getNoOfStudents(2)}}</th>
           <th style="color:gray">ลา {{getNoOfStudents(3)}}</th>
@@ -31,16 +33,27 @@
       </thead>
       <tbody>
         <ng-container formArrayName="status">
-          <tr *ngFor="let dt of data; let i = index">
+          <tr *ngFor="let dt of data; let i = index"
+            [ngClass]="{'text-red': calculateEmoji(dt.gainedClassWeight/ dt.totalClassWeight) == 3}">
             <td>{{dt.student.sequence}}</td>
             <td>{{dt.studentId}}</td>
-            <td>{{dt.student.firstName}}</td>
+            <td>
+              <span *ngIf="calculateEmoji(dt.gainedClassWeight/ dt.totalClassWeight) == 0">🥇</span>
+              <span *ngIf="calculateEmoji(dt.gainedClassWeight/ dt.totalClassWeight) == 1">😍</span>
+              <span *ngIf="calculateEmoji(dt.gainedClassWeight/ dt.totalClassWeight) == 2">🥹</span>
+              <span *ngIf="calculateEmoji(dt.gainedClassWeight/ dt.totalClassWeight) == 3">😡</span>
+              {{dt.student.firstName}}
+            </td>
             <td>{{dt.student.lastName}}</td>
-            <!-- <td>{{dt.attendTime}}</td> -->
+            <!-- <td>{{dt.attendTime}}</td>-->
             <ng-container [formGroup]="eachFormGroup(i)">
               <td>
                 <!-- <input type="text" formControlName="attendTime"> -->
                 {{eachFormGroup(i).value.attendTime | thaidate}}
+              </td>
+              <td class="text-center" [attr.data-sort]="dt.gainedClassWeight">
+                <span>{{dt.gainedClassWeight * 100 / dt.totalClassWeight | number:'1.0-0'}}%</span>
+                <span class="ml-2">({{dt.gainedClassWeight}}/{{dt.totalClassWeight}})</span>
               </td>
               <td>
                 <mat-radio-group formControlName="attendanceStatus" name="{{i}}">

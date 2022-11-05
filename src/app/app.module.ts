@@ -11,6 +11,10 @@ import { SharedModule } from './shared/shared.module';
 import { MaterialModule } from './shared/material/material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { OAuthModule } from 'angular-oauth2-oidc';
+import { LoginComponent } from './pages/login/login.component';
+import { HomeComponent } from './pages/home/home.component';
+import { AuthChildGuard } from './guards/authchild.guard';
 
 @NgModule({
   declarations: [
@@ -19,6 +23,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
     SidebarComponent,
     PagenotFoundComponent,
     NavbarComponent,
+    LoginComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,6 +34,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
     SharedModule,
     MaterialModule,
     HttpClientModule,
+    OAuthModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

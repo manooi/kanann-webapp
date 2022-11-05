@@ -1,27 +1,24 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDrawer } from '@angular/material/sidenav';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { SavedStateService } from 'src/app/shared/service/savedstate.service';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class HomeComponent implements OnInit {
+
   constructor(
     public savedStateService: SavedStateService,
     private oauthService: OAuthService,
-    private router: Router
-    ) { }
-  
-  ngOnInit(): void {
-  }
+    private router: Router,
+    private spinner: NgxSpinnerService,
+  ) { }
 
-  logout() {
-    this.oauthService.logOut();
-    this.router.navigateByUrl('/login');
+  ngOnInit(): void {
   }
 
   get givenName() {

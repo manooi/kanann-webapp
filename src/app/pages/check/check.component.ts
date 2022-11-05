@@ -3,13 +3,13 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { AppConstant } from 'src/app/config/app.constant';
-import { CreateTransactionRequest } from 'src/app/model/check';
 import { CheckService } from 'src/app/shared/service/api/check.service';
-import { CommonService } from 'src/app/shared/service/api/common.service';
 import { AlertService } from 'src/app/shared/service/utility/alert.service';
 import cloneDeep from "lodash/cloneDeep";
 import { MaintenanceService } from 'src/app/shared/service/api/maintenance.service';
 import { DateTimeUtil } from 'src/app/class/utility/datetime-util';
+import { CreateDialogComponent } from './create-dialog/create-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 export interface Student {
   studentId: number;
@@ -37,29 +37,17 @@ export class CheckComponent implements OnInit {
     private checkService: CheckService,
     private alertService: AlertService,
     private fb: FormBuilder,
-    private router: Router,
-    private route: ActivatedRoute,
+    public dialog: MatDialog,
   ) {
     this.initializeForm();
     this.dtOptions = cloneDeep(AppConstant.dtOptionsWithOutSearch);
   }
 
   create() {
-    const param: CreateTransactionRequest = {
-      academicYearId: this.isAcademicYear.value,
-      subjectCode: this.isSubject.value,
-      classRoomId: this.isClassRoom.value,
-      startDateTime: new Date()
-    }
-    this.checkService.createTransaction(param).subscribe(
-      (data) => {
-        this.alertService.success('สร้างคลาสเรียนสำเร็จ');
-        this.search();
-      },
-      (err) => {
-        this.alertService.error('error');
-      },
-    )
+    this.dialog.open(CreateDialogComponent, {
+      data: { formValue: this.maintainForm.value },
+      width: "300px"
+    });
   }
 
   private initializeForm() {
@@ -71,7 +59,9 @@ export class CheckComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.checkService.created$.subscribe(() => {
+      this.search();
+    })
   }
 
   convertDate(date: any) {
@@ -136,13 +126,17 @@ export class CheckComponent implements OnInit {
   }
 
   deleleteClass(transactionClassId: number) {
-    this.checkService.removeTransaction(transactionClassId).subscribe(
-      (data) => {
-        this.alertService.success("ลบสำเร็จ", () => this.search());
-      },
-      (err) => {
-        this.alertService.error('error');
-      },
-    );
+    const deleteClass = () => {
+      this.checkService.removeTransaction(transactionClassId).subscribe(
+        (data) => {
+          this.alertService.success("ลบสำเร็จ", () => this.search());
+        },
+        (err) => {
+          this.alertService.error('error');
+        },
+      );
+    };
+
+    this.alertService.yesno('ยืนยันการลบ', () => deleteClass())
   }
 }

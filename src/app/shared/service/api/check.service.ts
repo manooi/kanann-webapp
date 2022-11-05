@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { CreateTransactionRequest } from 'src/app/model/check';
 import { environment } from 'src/environments/environment';
@@ -39,5 +40,11 @@ export class CheckService {
 
   getRfidMapping() {
     return this.http.get(environment.apiUrl + '/Check/RFIDMapping');
+  }
+
+  private createdSubject = new Subject();
+  created$ = this.createdSubject.asObservable();
+  onCreated() {
+    this.createdSubject.next(true);
   }
 }
