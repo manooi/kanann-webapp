@@ -5,7 +5,11 @@
   <span routerLink="/home" class="logo" style="cursor: pointer">คะแนน.com</span>
   <span class="spacer"></span>
 
-  <span>{{givenName}}</span>
+  <!-- <span>{{givenName}}</span> -->
+  <ng-container *ngIf="auth.user$ | async as user">
+    <img [src]="user?.picture" class="avatar mr-2">
+    <span>{{user.given_name}} {{user.family_name}}</span>
+  </ng-container>
   <mat-icon class="ml-3" style="cursor: pointer" (click)="logout()">logout</mat-icon>
 
   <!-- <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">

@@ -17,9 +17,9 @@ export class AlertService {
     })
   }
 
-  unauthoirzed(msg: string, callback?: any) {
+  unauthorized(msg: string, callback?: any) {
     Swal.fire({
-      title: '401',
+      title: '401 - Unauthorized',
       html: `<html>${msg}</html>`,
       icon: 'error',
       confirmButtonText: 'Ok'
