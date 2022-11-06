@@ -10,6 +10,7 @@ export const environment = {
     domain: 'dev-020ww034u40dczlv.us.auth0.com',
     clientId: 'UfoO9DJLAk4TlayucvxDVRX6xTLTvCZ9',
     redirectUri: window.location.origin,
+    logoutRedirectUri: 'https://xn--42c6ba4gwd.com/login',
     audience: 'kanan_api'
   }
 };
