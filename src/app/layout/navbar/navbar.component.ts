@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
-import { OAuthService } from 'angular-oauth2-oidc';
+import { AuthService } from '@auth0/auth0-angular';
 import { SavedStateService } from 'src/app/shared/service/savedstate.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { SavedStateService } from 'src/app/shared/service/savedstate.service';
 export class NavbarComponent implements OnInit {
   constructor(
     public savedStateService: SavedStateService,
-    private oauthService: OAuthService,
+    public auth: AuthService,
     private router: Router
     ) { }
   
@@ -20,16 +20,6 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this.oauthService.logOut();
-    this.router.navigateByUrl('/login');
+    this.auth.logout();
   }
-
-  get givenName() {
-    const claims: any = this.oauthService.getIdentityClaims();
-    if (!claims) {
-      return null;
-    }
-    return claims.name;
-  }
-
 }

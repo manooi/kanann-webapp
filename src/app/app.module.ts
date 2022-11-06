@@ -9,12 +9,14 @@ import { PagenotFoundComponent } from './layout/pagenotfound/pagenotfound.compon
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { SharedModule } from './shared/shared.module';
 import { MaterialModule } from './shared/material/material.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxSpinnerModule } from "ngx-spinner";
-import { OAuthModule } from 'angular-oauth2-oidc';
 import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
-import { AuthChildGuard } from './guards/authchild.guard';
+import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
+import { environment } from 'src/environments/environment';
+import { LoadingComponent } from './components/loading/loading.component';
+import { Auth401Interceptor } from './interceptors/unauthorized.interceptor';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { AuthChildGuard } from './guards/authchild.guard';
     NavbarComponent,
     LoginComponent,
     HomeComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
@@ -34,9 +37,26 @@ import { AuthChildGuard } from './guards/authchild.guard';
     SharedModule,
     MaterialModule,
     HttpClientModule,
-    OAuthModule.forRoot()
+    AuthModule.forRoot({
+      ...environment.auth,
+      httpInterceptor: {
+        allowedList: [`${environment.apiUrl}/*`]
+      }
+    })
+
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthHttpInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: Auth401Interceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

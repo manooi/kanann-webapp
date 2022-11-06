@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { OAuthService } from 'angular-oauth2-oidc';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-login',
@@ -9,13 +9,13 @@ import { OAuthService } from 'angular-oauth2-oidc';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private oauthService: OAuthService, private router: Router) { }
+  constructor(private auth: AuthService, private router: Router) { }
 
   ngOnInit(): void {
 
   }
 
   login() {
-    this.oauthService.initImplicitFlow();
+    this.auth.loginWithRedirect();
   }
 }
