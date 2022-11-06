@@ -28,6 +28,7 @@ export class MyAuthGuard implements CanActivate, CanActivateChild {
           );
         }
         else {
+          this.router.navigateByUrl('/login');
           return of(false);
         }
       }),
