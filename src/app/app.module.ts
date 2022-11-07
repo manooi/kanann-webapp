@@ -16,7 +16,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
 import { environment } from 'src/environments/environment';
 import { LoadingComponent } from './components/loading/loading.component';
-import { Auth401Interceptor } from './interceptors/unauthorized.interceptor';
+import { Auth401and403Interceptor } from './interceptors/unauthorized.interceptor';
 
 @NgModule({
   declarations: [
@@ -53,7 +53,7 @@ import { Auth401Interceptor } from './interceptors/unauthorized.interceptor';
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: Auth401Interceptor,
+      useClass: Auth401and403Interceptor,
       multi: true
     },
   ],

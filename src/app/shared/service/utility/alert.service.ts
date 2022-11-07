@@ -30,6 +30,18 @@ export class AlertService {
     })
   }
 
+  forbidden(msg: string, callback?: any) {
+    Swal.fire({
+      title: '403 - Forbidden',
+      html: `<html>${msg}</html>`,
+      icon: 'error',
+      confirmButtonText: 'Ok'
+    }).then((result) => {
+      if (result.isConfirmed && callback) {
+        callback();
+      }
+    })
+  }
 
   success(msg: string, callback?: any) {
     Swal.fire({
