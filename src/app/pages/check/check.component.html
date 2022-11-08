@@ -71,12 +71,10 @@
         <td>{{dt.classRoomName}}</td>
         <td>
           <a [routerLink]="['/check/view', dt.transactionClassId]" target="_blank">
-            <!-- <mat-icon>visibility</mat-icon> -->
-            ดู
+            <mat-icon>visibility</mat-icon>
           </a>
           <a [routerLink]="['/check/edit', dt.transactionClassId]" target="_blank" class="ml-2">
-            <!-- <mat-icon>edit</mat-icon> -->
-            เช็คชื่อ
+            <mat-icon>edit</mat-icon>
           </a>
           <a class="ml-2">
             <mat-icon style="cursor: pointer" (click)="deleleteClass(dt.transactionClassId)">delete</mat-icon>

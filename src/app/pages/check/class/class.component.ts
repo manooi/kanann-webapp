@@ -10,6 +10,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { RFIDSocketService } from 'src/app/shared/service/rfid-socket.service';
 import { ThrowStmt } from '@angular/compiler';
 import { tap } from 'rxjs/operators';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   templateUrl: './class.component.html',
@@ -34,6 +35,8 @@ export class ClassComponent implements OnInit {
     this.dtOptions.pageLength = 50;
     this.dtOptions.dom = "tlip";
     this.form = this.fb.group({
+      isRetro: [null],
+      date: [null],
       status: this.fb.array([])
     });
     moment.locale("th");
@@ -138,13 +141,41 @@ export class ClassComponent implements OnInit {
   }
 
   isFormTouchedOrDirty() {
-    return this.form.dirty || this.form.touched;
+    return this.isStatus.dirty || this.isStatus.touched;
+  }
+
+  onRetroChecked(event: MatCheckboxChange) {
+    if (event.checked) {
+      this.isStatus.disable();
+    }
+    else {
+      this.isStatus.enable();
+    }
+  }
+
+  onDateChanged(event: any) {
+    if (event.target.value) {
+      this.isStatus.enable();
+      return;
+    }
+    this.isStatus.disable();
   }
 
   onStatusClick(index: number, value?: string) {
-    this.eachFormGroup(index).patchValue({
-      attendTime: value == '4' ? null : moment().utc()
-    });
+    // normal
+    if (!this.isRetro.value) {
+      this.eachFormGroup(index).patchValue({
+        attendTime: value == '4' ? null : moment().utc()
+      });
+    }
+
+    // retro check
+    else {
+      this.isStatus.enable();
+      this.eachFormGroup(index).patchValue({
+        attendTime: value == '4' ? null : moment(this.isDate.value).utc()
+      });
+    }
   }
 
   findIndexByRFID(rfid: string) {
@@ -198,7 +229,7 @@ export class ClassComponent implements OnInit {
   }
 
   markAll() {
-    const currentTime = moment().utc();
+    const currentTime = this.isRetro.value ? moment(this.isDate.value).utc() : moment().utc();
     for (let index = 0; index < this.isStatus.length; index++) {
       this.eachFormGroup(index).patchValue({
         attendanceStatus: '1',
@@ -227,6 +258,12 @@ export class ClassComponent implements OnInit {
     }
   }
 
+  get isRetro() {
+    return this.form.controls['isRetro'] as FormControl;
+  }
 
+  get isDate() {
+    return this.form.controls['date'] as FormControl;
+  }
 
 }

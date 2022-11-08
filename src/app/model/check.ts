@@ -2,7 +2,7 @@ export interface CreateTransactionRequest {
   academicYearId: number,
   subjectCode: string,
   classRoomId: number,
-  startDateTime: Date,
+  startDateTime: Date | any,
   classWeight: number
 }
 
