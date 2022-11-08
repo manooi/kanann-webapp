@@ -8,13 +8,21 @@
     tungsten</mat-icon>
 </h2> -->
 
-<div class="text-right mb-3" *ngIf="isEdit">
+<div class="text-right" *ngIf="isEdit">
   <button mat-raised-button class="mr-3" (click)="markAll()">มาครบ</button>
   <button mat-raised-button color="success" style="width: 150px" (click)="save()"
     [disabled]="!isFormTouchedOrDirty()">บันทึก</button>
 </div>
 
 <form [formGroup]="form" novalidate>
+  <div class="text-right mt-3 mb-5">
+    <h3 class="inline-block">ย้อนหลัง</h3>
+    <mat-checkbox class="inline-block ml-3" color="primary" formControlName="isRetro" (change)="onRetroChecked($event)"></mat-checkbox>
+    <div [ngClass]="{'hidden' : !isRetro.value}">
+      <input type="datetime-local" style="font-size: 1.25em" formControlName="date" (change)="onDateChanged($event)">
+    </div>
+  </div>
+
   <div id="table">
     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="cell-border compact stripe">
       <thead>

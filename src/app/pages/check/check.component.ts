@@ -46,7 +46,7 @@ export class CheckComponent implements OnInit {
   create() {
     this.dialog.open(CreateDialogComponent, {
       data: { formValue: this.maintainForm.value },
-      width: "300px"
+      width: "25%"
     });
   }
 

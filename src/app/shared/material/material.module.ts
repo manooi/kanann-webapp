@@ -43,6 +43,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [],
@@ -94,6 +95,7 @@ import { CommonModule } from '@angular/common';
     OverlayModule,
     PortalModule,
     ScrollingModule,
+    MatFormFieldModule
   ]
 })
 export class MaterialModule { }
