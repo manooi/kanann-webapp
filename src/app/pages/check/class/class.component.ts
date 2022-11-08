@@ -11,6 +11,7 @@ import { RFIDSocketService } from 'src/app/shared/service/rfid-socket.service';
 import { ThrowStmt } from '@angular/compiler';
 import { tap } from 'rxjs/operators';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { DateTimeUtil } from 'src/app/class/utility/datetime-util';
 
 @Component({
   templateUrl: './class.component.html',
@@ -20,6 +21,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 export class ClassComponent implements OnInit {
 
   isEdit: boolean = false;
+  classDateTime!: Date;
 
   constructor(
     private router: Router,
@@ -103,6 +105,8 @@ export class ClassComponent implements OnInit {
         const classes = res.classes;
         const rfidMapping = res.rfidMapping;
 
+        this.classDateTime = classes.result.classDate;
+
         this.rfidMapping = rfidMapping.result;
         this.data = classes.result.transactionAttendance;
         this.header["subjectName"] = classes.result.subjectName;
@@ -145,16 +149,14 @@ export class ClassComponent implements OnInit {
   }
 
   onRetroChecked(event: MatCheckboxChange) {
-    if (event.checked) {
-      this.isStatus.disable();
-    }
-    else {
-      this.isStatus.enable();
-    }
+    this.form.patchValue({
+      date: DateTimeUtil.convertDateTimeForDateTimePicker(this.classDateTime)
+    });
+
   }
 
   onDateChanged(event: any) {
-    if (event.target.value) {
+    if (event?.target?.value) {
       this.isStatus.enable();
       return;
     }
