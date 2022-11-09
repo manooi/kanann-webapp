@@ -1,12 +1,39 @@
 <h1 class="mt-4" style="font-size: 2.5em">
   <mat-icon style="font-size: 0.8em" class="mr-2">dashboard</mat-icon> Dashboard
 </h1>
-<mat-divider></mat-divider>
 
-<div class="grid">
+<mat-tab-group [selectedIndex]="selectedTabIndex" #matTab (selectedTabChange)="selectedTabIndex = $event.index">
+  <mat-tab label="เข้าเรียนน้อยกว่า 80%">
+    <div class="mt-3"></div>
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="cell-border compact stripe">
+      <thead>
+        <tr>
+          <th>รหัสประจำตัว</th>
+          <th>เลขที่</th>
+          <th>ชื่อ</th>
+          <th>สกุล</th>
+          <th>ห้องเรียน</th>
+          <th>วิชาเรียน</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dt of data">
+          <td>{{dt.studentId}}</td>
+          <td>{{dt.sequence}}</td>
+          <td>{{dt.firstName}}</td>
+          <td>{{dt.lastName}}</td>
+          <td>{{dt.classRoomName}}</td>
+          <td>{{dt.subjectCode}} - {{dt.subjectName}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-tab>
+</mat-tab-group>
+
+<!-- <div class="grid">
   <div class="col-6">
     <canvas baseChart [data]="barChartData" [options]="barChartOptions" [plugins]="barChartPlugins"
       [legend]="barChartLegend" [type]="'bar'">
     </canvas>
   </div>
-</div>
+</div> -->
