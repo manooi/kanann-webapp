@@ -6,8 +6,9 @@ import { tap } from 'rxjs/operators';
 @Injectable()
 export class RFIDSocketService extends Socket implements OnDestroy {
   constructor(private route: ActivatedRoute) {
-    super({ url: 'http://128.199.124.170:8888', options: { query: { "id": route.snapshot.params.id } } });
-    // super({ url: 'https://howtocal.com:8888', options: { query: { "id": route.snapshot.params.id } } });
+    super({ url: 'https://www.howtocal.com:8888', options: { query: { "id": route.snapshot.params.id } } });
+    // super({ url: 'https://128.199.124.170:8888', options: { query: { "id": route.snapshot.params.id } } });
+    // super({ url: 'https://howtocal.com:2052', options: { query: { "id": route.snapshot.params.id } } });
     // super({ url: 'http://localhost:8888', options: { query: { "id": route.snapshot.params.id } } });
   }
 
