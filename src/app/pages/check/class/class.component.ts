@@ -1,7 +1,7 @@
-import { Component, LOCALE_ID, OnInit } from '@angular/core';
+import { Component, LOCALE_ID, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { forkJoin, Subject } from 'rxjs';
+import { forkJoin, Subject, Subscription } from 'rxjs';
 import { AppConstant } from 'src/app/config/app.constant';
 import { CheckService } from 'src/app/shared/service/api/check.service';
 import * as moment from "moment";
@@ -18,7 +18,7 @@ import { DateTimeUtil } from 'src/app/class/utility/datetime-util';
   styleUrls: ['./class.component.scss'],
   providers: [RFIDSocketService]
 })
-export class ClassComponent implements OnInit {
+export class ClassComponent implements OnInit, OnDestroy {
 
   isEdit: boolean = false;
   classDateTime!: Date;
@@ -44,9 +44,13 @@ export class ClassComponent implements OnInit {
     moment.locale("th");
   }
 
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
+
   form!: FormGroup;
 
-  rfid$ = this.rFIDSocketService.getMessage().pipe(
+  sub: Subscription = this.rFIDSocketService.getMessage().pipe(
     tap((res: any) => {
       console.log('rfid', res);
       const idx = this.findIndexByRFID(res.msg);
@@ -127,8 +131,9 @@ export class ClassComponent implements OnInit {
   }
 
   debug() {
-    console.log(this.isStatus);
-    console.log(this.isStatus.value);
+    this.alertService.rfidCheck('ok');
+    // console.log(this.isStatus);
+    // console.log(this.isStatus.value);
   }
 
   getNoOfStudents(status: number) {
@@ -187,6 +192,10 @@ export class ClassComponent implements OnInit {
   }
 
   onRFIDTap(index: number, value: string) {
+    if (!this.isEdit) {
+      return;
+    }
+
     this.eachFormGroup(index).patchValue({
       attendTime: moment().utc(),
       attendanceStatus: value
@@ -267,5 +276,4 @@ export class ClassComponent implements OnInit {
   get isDate() {
     return this.form.controls['date'] as FormControl;
   }
-
 }

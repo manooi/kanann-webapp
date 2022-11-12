@@ -1,7 +1,6 @@
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Socket } from 'ngx-socket-io';
-import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class RFIDSocketService extends Socket implements OnDestroy {

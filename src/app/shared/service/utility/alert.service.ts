@@ -84,4 +84,17 @@ export class AlertService {
 
   }
 
+  rfidCheck(msg: string, callback?: any) {
+    Swal.fire({
+      title: 'มาจ้า',
+      text: msg,
+      html: `<img style="height:350px;" src="https://picsum.photos/350/?random&t=${Math.random()}" />`,
+      confirmButtonText: 'Ok'
+    }).then((result) => {
+      if (result.isConfirmed && callback) {
+        callback();
+      }
+    })
+  }
+
 }
