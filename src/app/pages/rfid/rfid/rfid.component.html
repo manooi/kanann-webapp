@@ -1,0 +1,13 @@
+<div id="container" class="flex justify-content-center align-items-center">
+  <div class="sm:w-12 md:w-8 lg:w-8">
+    <form class="rfid-form">
+      <div class="text-center">
+        <h1>RFID</h1>
+      </div>
+      <mat-form-field class="rfid-formfield mt-6" appearance="fill">
+        <mat-label>RFID</mat-label>
+        <input matInput [(ngModel)]="rfidValue" name="rfid" (change)="onChange($event)" #rfid>
+      </mat-form-field>
+    </form>
+  </div>
+</div>

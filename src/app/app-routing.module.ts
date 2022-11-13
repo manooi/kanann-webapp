@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from '@auth0/auth0-angular';
 import { MyAuthGuard } from './guards/myauth.guard';
 import { LayoutComponent } from './layout/layout.component';
 import { PagenotFoundComponent } from './layout/pagenotfound/pagenotfound.component';
 import { LoginComponent } from './pages/login/login.component';
+import { RfidComponent } from './pages/rfid/rfid/rfid.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'rfid', loadChildren: () => import('./pages/rfid/rfid.module').then(m => m.RfidModule) },
   {
     path: '', component: LayoutComponent,
     canActivate: [MyAuthGuard],

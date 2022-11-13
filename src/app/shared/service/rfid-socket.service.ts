@@ -22,4 +22,8 @@ export class RFIDSocketService extends Socket implements OnDestroy {
   getAvailableReader() {
     return this.fromEvent('avaiable_reader');
   }
+
+  sendMessage(msg: string) {
+    return this.emit('rfid', msg);
+  }
 }
