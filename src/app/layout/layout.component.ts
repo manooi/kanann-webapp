@@ -1,50 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { SavedStateService } from '../shared/service/savedstate.service';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { delay, takeUntil } from 'rxjs/operators';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss']
 })
-export class LayoutComponent implements OnInit {
+export class LayoutComponent implements OnInit, AfterViewInit {
   destroyed = new Subject<void>();
-  currentScreenSize!: string;
+  @ViewChild(MatSidenav) sidenav!: MatSidenav;
 
-  // Create a map to display breakpoint names for demonstration purposes.
-  displayNameMap = new Map([
-    [Breakpoints.XSmall, 'XSmall'],
-    [Breakpoints.Small, 'Small'],
-    [Breakpoints.Medium, 'Medium'],
-    [Breakpoints.Large, 'Large'],
-    [Breakpoints.XLarge, 'XLarge'],
-  ]);
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    public savedStateService: SavedStateService,) {
+  }
 
-  constructor(breakpointObserver: BreakpointObserver, public savedStateService: SavedStateService,) {
-    breakpointObserver
-      .observe([
-        Breakpoints.XSmall,
-        Breakpoints.Small,
-        Breakpoints.Medium,
-        Breakpoints.Large,
-        Breakpoints.XLarge,
-      ])
-      .pipe(takeUntil(this.destroyed))
-      .subscribe(result => {
-        for (const query of Object.keys(result.breakpoints)) {
-          if (result.breakpoints[query]) {
-            this.currentScreenSize = this.displayNameMap.get(query) ?? 'Unknown';
-            if(this.currentScreenSize === 'XSmall' || this.currentScreenSize === 'Small') {
-              this.savedStateService.toggleClose();
-            }
-            else {
-              this.savedStateService.toggleOpen();
-            }
-          }
+  ngOnInit(): void {
+  }
+
+  ngAfterViewInit(): void {
+    this.breakpointObserver.observe(['(max-width: 768px)']).pipe(
+      delay(0),
+      takeUntil(this.destroyed)
+    ).subscribe(
+      (res) => {
+        if (res.matches) {
+          this.sidenav.mode = 'push';
+          this.sidenav.close();
         }
-      });
+        else {
+          this.sidenav.mode = 'side';
+          this.sidenav.open();
+        }
+      }
+    )
   }
 
   ngOnDestroy() {
@@ -52,7 +45,5 @@ export class LayoutComponent implements OnInit {
     this.destroyed.complete();
   }
 
-  ngOnInit(): void {
-  
-  }
+
 }

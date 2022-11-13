@@ -12,7 +12,7 @@ export class RFIDSocketService extends Socket implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('destroy');
+    // console.log('destroy');
   }
 
   getMessage() {

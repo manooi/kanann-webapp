@@ -1,16 +1,17 @@
 <section class="navbar">
-  <app-navbar></app-navbar>
+  <app-navbar [sidenav]="sidenav"></app-navbar>
 </section>
 
 <section>
-  <mat-drawer-container>
-    <mat-drawer #drawer mode="side" class="side-bar" [opened]="savedStateService.sideBarState">
-      <app-sidebar></app-sidebar>
-    </mat-drawer>
-    <mat-drawer-content>
-      <div [ngClass]="{'main-content':savedStateService.sideBarState, 'collapse': !savedStateService.sideBarState}">
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav="matSidenav">
+      <app-sidebar [sidenav]="sidenav"></app-sidebar>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="main-content">
         <router-outlet></router-outlet>
       </div>
-    </mat-drawer-content>
-  </mat-drawer-container>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </section>
