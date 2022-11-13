@@ -8,7 +8,6 @@ import { RfidComponent } from './pages/rfid/rfid/rfid.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'rfid', loadChildren: () => import('./pages/rfid/rfid.module').then(m => m.RfidModule) },
   {
     path: '', component: LayoutComponent,
     canActivate: [MyAuthGuard],
@@ -19,6 +18,7 @@ const routes: Routes = [
       { path: 'assignment', loadChildren: () => import('./pages/assignment/assignment.module').then(m => m.AssignmentModule) },
       { path: 'scoring', loadChildren: () => import('./pages/scoring/scoring.module').then(m => m.ScoringModule) },
       { path: 'dashboard', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
+      { path: 'rfid', loadChildren: () => import('./pages/rfid/rfid.module').then(m => m.RfidModule) },
     ]
   },
   { path: '**', component: PagenotFoundComponent },
