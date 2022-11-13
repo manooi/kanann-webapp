@@ -7,10 +7,17 @@
 }
 
 mat-sidenav-container {
+  position: fixed;
+  top: 64px;
   height: calc(100vh - 64px);
+  width: 100%;
+  // border: 2px solid rgb(13, 0, 255);
 }
 
 mat-sidenav {
+  position: fixed;
+  top: 64px;
+  // border: 2px solid red;
   // margin: 16px;
   width: $side-bar-width;
   // border-right: none;
@@ -28,6 +35,4 @@ mat-sidenav {
 
   // position: fixed;
   // top: $nav-bar-height;
-  width: 100%;
-  height: calc(100% - 64px);
 }
