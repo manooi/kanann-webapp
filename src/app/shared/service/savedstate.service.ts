@@ -9,6 +9,13 @@ export class SavedStateService {
 
   toggle(): void {
     this.sideBarState = !this.sideBarState;
-    console.log(this.sideBarState);
+  }
+
+  toggleClose(): void {
+    this.sideBarState = false;
+  }
+
+  toggleOpen(): void {
+    this.sideBarState = true;
   }
 }

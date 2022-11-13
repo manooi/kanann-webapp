@@ -8,8 +8,8 @@
   </div>
   <div class="align-self-end">
     <div class="text-right" *ngIf="isEdit">
-      <mat-icon class="mr-3" [ngStyle]="{'color': $any((availableReader$ |async))?.count > 0 ? 'green' : 'red'}">
-        tungsten</mat-icon>
+      <!-- <mat-icon class="mr-3" [ngStyle]="{'color': $any((availableReader$ |async))?.count > 0 ? 'green' : 'red'}">
+        tungsten</mat-icon> -->
       <button mat-raised-button class="mr-3" (click)="markAll()">มาครบ</button>
       <button mat-raised-button color="success" style="width: 150px" (click)="save()"
         [disabled]="!isFormTouchedOrDirty()">บันทึก</button>
