@@ -4,6 +4,8 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { delay, filter, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { getSideBarItemById, sidebarItems, SideBarItems } from 'src/app/config/sidebar-items';
+import { AuthCredentialService } from 'src/app/shared/service/auth-credential.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,11 +15,14 @@ import { delay, filter, takeUntil, withLatestFrom } from 'rxjs/operators';
 export class SidebarComponent implements OnInit, OnDestroy {
   destroyed = new Subject<void>();
   @Input() sidenav!: MatSidenav;
+  sidebarItems: SideBarItems[] = [];
 
   constructor(
     private router: Router,
-    private breakpointObserver: BreakpointObserver
-  ) { }
+    private breakpointObserver: BreakpointObserver,
+    private authCredentialService: AuthCredentialService
+  ) {
+  }
 
   autoToggleSideNav() {
     const routerChanged$ = this.router.events.pipe(
@@ -39,6 +44,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.authCredentialService.getPage().subscribe((res) => {
+      this.sidebarItems = getSideBarItemById(res.map((i) => i.pageId));
+    });
+
     this.autoToggleSideNav();
   }
 
