@@ -3,52 +3,31 @@
 .navbar {
   position: sticky;
   top: 0;
-  z-index: 999;
+  // z-index: 999;
+}
+
+mat-sidenav-container {
+  height: calc(100vh - 64px);
+}
+
+mat-sidenav {
+  // margin: 16px;
+  width: $side-bar-width;
+  // border-right: none;
+  // background: #002b5c;
+  // color: white;
+  // padding: 16px;
+  // text-align: center;
 }
 
 .main-content {
-  // style
   // background-color: #eef0f5;
   padding: 2em;
   // padding: 0.5em 0em 0 1.5em;
   // border: 2px solid red;
 
-  // position
-  position: fixed;
-  top: $nav-bar-height;
-  width: calc(100% - 250px);
-  height: calc(100% - 64px);
-  overflow-y: scroll;
-}
-
-.collapse {
-  // style
-  padding: 2.5em 2.5em 0 2.5em;
-
-  position: fixed;
-  top: $nav-bar-height;
+  // position: fixed;
+  // top: $nav-bar-height;
   width: 100%;
   height: calc(100% - 64px);
-  overflow-y: scroll;
 }
-
-.side-bar {
-  // width
-  min-width: $side-bar-width;
-  max-width: $side-bar-width;
-
-  // style
-  // background-color: rgb(250, 250, 250);
-  // border: 0px;
-
-  // position
-  position: fixed;
-  top: $nav-bar-height;
-  bottom: 0;
-}
-
-// @media screen and (max-width: 1200px)   {
-//   .layout {
-//     margin: 0 0% 0 0%;
-//   } 
-// }
