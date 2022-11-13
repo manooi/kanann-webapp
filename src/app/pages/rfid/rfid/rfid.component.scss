@@ -1,8 +1,11 @@
-#container {
-  height: 100%;
-  width: 100%;
+.box {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  -webkit-transform: translate(-50%, -40%);
+  transform: translate(-50%, -40%);
 }
 
-.rfid-formfield {
+.full-width {
   width: 100%;
 }

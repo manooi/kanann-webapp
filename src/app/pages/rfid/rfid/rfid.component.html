@@ -1,11 +1,11 @@
-<div id="container" class="flex justify-content-center align-items-center">
-  <form class="rfid-form w-12 md:w-8">
-    <div class="text-center">
-      <h1 style="font-size: 3em">แตะ RFID</h1>
-    </div>
-    <mat-form-field class="rfid-formfield mt-6" appearance="fill">
+<div class="box w-8">
+  <div class="text-center">
+    <h1 style="font-size: 3em">แตะ RFID</h1>
+  </div>
+  <div>
+    <mat-form-field class="mt-6 full-width" appearance="fill">
       <mat-label></mat-label>
       <input matInput [(ngModel)]="rfidValue" name="rfid" (change)="onChange($event)" #rfid>
     </mat-form-field>
-  </form>
+  </div>
 </div>
