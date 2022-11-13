@@ -3,7 +3,6 @@ import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterSt
 import { AuthService } from '@auth0/auth0-angular';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
-import { UserService } from '../shared/service/api/user.service';
 import { AuthCredentialService } from '../shared/service/auth-credential.service';
 import { AlertService } from '../shared/service/utility/alert.service';
 

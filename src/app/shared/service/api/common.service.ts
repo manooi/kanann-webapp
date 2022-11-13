@@ -1,14 +1,18 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, iif, of } from 'rxjs';
 import { catchError, map, shareReplay, switchMap, tap } from 'rxjs/operators'
 import { Dropdown } from 'src/app/model/dropdown';
 import { environment } from 'src/environments/environment';
+import { AlertService } from '../utility/alert.service';
 
 @Injectable({ providedIn: 'root' })
 export class CommonService {
   selectedProvince$: any;
-  constructor(public http: HttpClient) { }
+  alertService: AlertService = new AlertService();
+  constructor(
+    public http: HttpClient
+  ) { }
 
   academicYear$ = this.http.get<any[]>(environment.apiUrl + '/Common/AcademicYear').pipe(map((i: any) => i.result));
   masterType$ = this.http.get<Dropdown[]>(environment.apiUrl + '/Common/MasterName').pipe(map((i: any) => i.result));
@@ -34,7 +38,14 @@ export class CommonService {
   );
 
   getSubjectByAcademicYear(params: any) {
-    return this.http.post<any[]>(environment.apiUrl + '/Common/GetSubjectByAcademicYear', params).pipe(map((i: any) => i.result));
+    return this.http.post<any[]>(environment.apiUrl + '/Common/GetSubjectByAcademicYear', params)
+      .pipe(
+        map((i: any) => i.result),
+        catchError((e: HttpErrorResponse) => {
+          this.alertService.error('ไม่พบข้อมูลรายวิชาและห้องเรียน');
+          return of([]);
+        })
+      );
   }
 
   getClassRoomBySubjectAndAcademicYear(subjectCode: string) {
