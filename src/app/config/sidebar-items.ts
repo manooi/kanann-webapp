@@ -69,6 +69,25 @@ export const sidebarItems: SideBarItems[] =
         }
       ]
     },
+    {
+      name: 'นักเรียน',
+      children: [
+        {
+          name: 'เวลาเรียน',
+          matIcon: 'access_time',
+          id: '7',
+          routerLink: '/student/attendance',
+          routerLinkActive: 'active'
+        },
+        {
+          name: 'คะแนนเก็บ',
+          matIcon: 'adb',
+          id: '8',
+          routerLink: '/student/score',
+          routerLinkActive: 'active'
+        },
+      ]
+    },
   ]
 
 export function getSideBarItemById(pageId: number[]) {

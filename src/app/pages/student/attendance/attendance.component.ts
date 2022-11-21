@@ -1,0 +1,51 @@
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AuthService } from '@auth0/auth0-angular';
+import { DataTableDirective } from 'angular-datatables';
+import { ChartConfiguration } from 'chart.js';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Subject } from 'rxjs';
+import { AppConstant } from 'src/app/config/app.constant';
+import { StudentService } from 'src/app/shared/service/api/student.service';
+
+@Component({
+  selector: 'app-attendance',
+  templateUrl: './attendance.component.html',
+  styleUrls: ['./attendance.component.scss']
+})
+export class AttendanceComponent implements OnInit {
+
+  dtOptions: DataTables.Settings | any = {};
+  dtTrigger: Subject<any> = new Subject<any>();
+  @ViewChild(DataTableDirective, { static: false }) dtElement!: DataTableDirective;
+
+  constructor(
+    private auth: AuthService,
+    private studentService: StudentService,
+    private spinner: NgxSpinnerService,
+  ) {
+    this.dtOptions = {
+      dom: 'ti',
+    }
+  }
+
+  data: any = [];
+
+  ngOnInit(): void {
+    this.spinner.show();
+    this.studentService.getAttendace().subscribe(
+      (data) => {
+        this.data = data;
+        this.spinner.hide();
+        this.dtTrigger.next();
+      },
+      (err) => {
+        console.log("err", err);
+      },
+    )
+
+  }
+
+  get user() {
+    return this.auth.user$;
+  }
+}

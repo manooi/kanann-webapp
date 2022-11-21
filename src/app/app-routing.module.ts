@@ -19,6 +19,7 @@ const routes: Routes = [
       { path: 'assignment', data: { id: '4' }, loadChildren: () => import('./pages/assignment/assignment.module').then(m => m.AssignmentModule) },
       { path: 'scoring', data: { id: '5' }, loadChildren: () => import('./pages/scoring/scoring.module').then(m => m.ScoringModule) },
       { path: 'dashboard', data: { id: '6' }, loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
+      { path: 'student', data: { id: '7,8' }, loadChildren: () => import('./pages/student/student.module').then(m => m.StudentModule) },
     ]
   },
   { path: '**', component: PagenotFoundComponent },
