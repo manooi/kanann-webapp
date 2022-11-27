@@ -1,1 +1,34 @@
-<p>score works!</p>
+<h1 class="mt-4" style="font-size: 2.5em">
+  <mat-icon style="font-size: 0.8em" class="mr-2">access_time</mat-icon> คะแนนเก็บ
+</h1>
+<mat-divider></mat-divider>
+
+<div class="mt-5"></div>
+
+<mat-card>
+  <h1 style="font-size: 2em">{{data[0]?.firstName}} {{data[0]?.lastName}}</h1>
+</mat-card>
+
+<div class="mt-5"></div>
+
+<mat-card>
+  <h2>คะแนนเก็บแยกตามรายวิชา</h2>
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="cell-border compact stripe">
+    <thead>
+      <tr>
+        <th>ปีการศึกษา</th>
+        <th>วิชา</th>
+        <th>คะแนนที่ได้</th>
+        <th>คะแนนเต็ม</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let dt of data">
+        <td>{{dt.academicYearName}}</td>
+        <td>{{dt.subjectCode}} - {{dt.subjectName}}</td>
+        <td>{{dt.score}}</td>
+        <td>{{dt.totalScore}}</td>
+      </tr>
+    </tbody>
+  </table>
+</mat-card>

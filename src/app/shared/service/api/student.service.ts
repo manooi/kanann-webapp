@@ -22,7 +22,18 @@ export class StudentService {
     return this.getEmail().pipe(
       switchMap((email) => {
         const queryParam = new HttpParams().set('userName', email);
-        return this.http.get(environment.apiUrl + "/Student/LessThanEightyPercentAttendance", { params: queryParam }).pipe(
+        return this.http.get(environment.apiUrl + "/Student/Attendance", { params: queryParam }).pipe(
+          map((i: any) => i.result)
+        );
+      })
+    )
+  }
+
+  getAssignmentScore() {
+    return this.getEmail().pipe(
+      switchMap((email) => {
+        const queryParam = new HttpParams().set('userName', email);
+        return this.http.get(environment.apiUrl + "/Student/AssignmentScore", { params: queryParam }).pipe(
           map((i: any) => i.result)
         );
       })

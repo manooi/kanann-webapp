@@ -21,8 +21,7 @@
 
 <!-- <pre>{{createAssignmentForm?.value | json}}</pre> -->
 
-<div mat-dialog-actions>
-  <button mat-raised-button color="success" [disabled]="!isFormValid" (click)="create()">สร้าง</button>
+<div mat-dialog-actions class="create-button">
   <button mat-raised-button color="warn" mat-dialog-close class="ml-2">ยกเลิก</button>
-  <!-- <button (click)="debug()">button</button> -->
+  <button mat-raised-button color="success" [disabled]="!isFormValid" (click)="create()">สร้าง</button>
 </div>

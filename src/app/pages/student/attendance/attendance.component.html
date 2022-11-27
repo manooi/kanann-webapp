@@ -7,7 +7,6 @@
 
 <mat-card>
   <h1 style="font-size: 2em">{{data[0]?.firstName}} {{data[0]?.lastName}}</h1>
-  <h2 class="mt-2">ปีการศึกษา {{data[0]?.academicYearName}}</h2>
 </mat-card>
 
 <div class="mt-5"></div>
@@ -28,7 +27,7 @@
         <td>{{dt.subjectCode}} - {{dt.subjectName}}</td>
         <td>{{dt.gainedClassWeight}}</td>
         <td>{{dt.totalClassWeight}}</td>
-        <td>{{(dt.gainedClassWeight / dt.totalClassWeight) * 100}}</td>
+        <td>{{(dt.gainedClassWeight / dt.totalClassWeight) * 100 | number:'1.2-2'}}</td>
       </tr>
     </tbody>
   </table>
