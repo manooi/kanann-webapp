@@ -1,10 +1,11 @@
 <form [formGroup]="editscoreForm" novalidate *ngIf="data?.assignmentHeaders.length > 0">
-  <h1>วิชา ว320319 - เคมี 5</h1>
   <div class="grid ml-0 mr-0">
     <div class="col">
+      <h1>วิชา {{data.subjectCode}} - {{data.subjectName}}</h1>
       <h2>ห้องเรียน {{data?.classRoomName}}</h2>
     </div>
     <div class="col text-right">
+      <button mat-raised-button color="primary" class="mr-2" style="width: 150px" (click)="export()">Export</button>
       <button mat-raised-button color="success" style="width: 150px" (click)="save()" [disabled]="!isFormReady()"
         type="submit">บันทึก</button>
     </div>
@@ -32,8 +33,9 @@
 
         <td *ngFor="let fg of isAssignment.controls; let i = index" [formGroupName]="i" class="score-input">
           <ng-container formArrayName="score">
-            <div [formGroupName]="seq" >
-              <input type="number" formControlName="score" [min]="0" [ngClass]="{'zero':$any(fg)?.getRawValue().score[seq].score == 0}">
+            <div [formGroupName]="seq">
+              <input type="number" formControlName="score" [min]="0"
+                [ngClass]="{'zero':$any(fg)?.getRawValue().score[seq].score == 0}">
               <p *ngIf="!getAssignmentFormControl(i, seq).valid && getAssignmentFormControl(i, seq).enabled"
                 style="color: red">invalid</p>
             </div>
@@ -48,6 +50,42 @@
     </table>
   </ng-container>
 </form>
+
+<table id="score-table" style="display: none">
+  <tr>
+    <th rowspan="2" class="no">เลขที่</th>
+    <th rowspan="2">รหัสประจำตัว</th>
+    <th rowspan="2" class="name">ชื่อ</th>
+    <th *ngFor="let assignment of data?.assignmentHeaders">{{assignment.assignmentName}}
+    </th>
+    <th>คะแนนรวม</th>
+  </tr>
+  <tr>
+    <th class="subject" *ngFor="let _ of data?.assignmentHeaders; let ci = index">
+      {{_.totalScore}}
+    </th>
+    <th>{{totalScore}}</th>
+  </tr>
+  <tr *ngFor="let student of data?.assignmentHeaders[0]?.scores; let seq = index">
+    <td class="no">{{student.sequence}}</td>
+    <td>{{student.studentId}}</td>
+    <td class="name"><span class="pl-2"></span>{{student.firstName}} {{student.lastName}}</td>
+
+    <td *ngFor="let fg of isAssignment.controls; let i = index">
+      <ng-container>
+        <div>
+          {{$any(fg)?.getRawValue().score[seq].score}}
+        </div>
+      </ng-container>
+    </td>
+    <td class="text-right" style="font-weight: bolder">
+      <span class="pr-2">
+        {{getEachStudentTotalScore(student.studentId)}}
+      </span>
+    </td>
+  </tr>
+</table>
+
 
 
 <!-- <pre>{{editscoreForm.value | json}}</pre> -->

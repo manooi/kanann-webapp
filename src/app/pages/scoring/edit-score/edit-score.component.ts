@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { delay } from 'rxjs/operators';
 import { ScoringService } from 'src/app/shared/service/api/scoring.service';
 import { AlertService } from 'src/app/shared/service/utility/alert.service';
+import { XlsxService } from 'src/app/shared/service/utility/xlsx.service';
 
 
 @Component({
@@ -21,7 +22,8 @@ export class EditScoreComponent implements OnInit {
     private scoringService: ScoringService,
     private spinner: NgxSpinnerService,
     private alertService: AlertService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private xlsxService: XlsxService
   ) { }
 
   ngOnInit(): void {
@@ -136,6 +138,11 @@ export class EditScoreComponent implements OnInit {
     return score.reduce((prev: any, cur: any) => {
       return prev + cur.score;
     }, 0);
+  }
+
+  export() {
+    const htmlElement = document.getElementById('score-table');
+    this.xlsxService.tableToExcel(htmlElement, `${this.data.subjectCode}_exported`, this.data.subjectCode);
   }
 
   save() {
