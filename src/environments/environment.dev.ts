@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
+  production: false,
   apiUrl: 'http://157.245.196.120',
   auth: {
     domain: 'dev-020ww034u40dczlv.us.auth0.com',
