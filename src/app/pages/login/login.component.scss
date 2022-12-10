@@ -1,8 +1,7 @@
 .main {
-  background: url("/assets/bg.jpg");
   height: 100%;
   width: 100%;
-  background-size: cover;
+  // background-size: cover;
 }
 
 .container {
@@ -13,14 +12,6 @@
   -moz-transform: translateX(-50%) translateY(-50%);
   -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
-
-  background: rgba(255, 255, 255, 0.20);
-  padding: 3em;
-  border-radius: 2em;
-
-  h1 {
-    color: white;
-  }
 }
 
 h1 {
