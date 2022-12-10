@@ -37,6 +37,7 @@ export class ScoreComponent implements OnInit {
         this.dtTrigger.next();
       },
       (err) => {
+        this.spinner.hide();
         console.log("err", err);
       },
     )

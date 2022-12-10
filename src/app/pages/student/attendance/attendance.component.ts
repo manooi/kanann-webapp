@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { DataTableDirective } from 'angular-datatables';
-import { ChartConfiguration } from 'chart.js';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject } from 'rxjs';
-import { AppConstant } from 'src/app/config/app.constant';
 import { StudentService } from 'src/app/shared/service/api/student.service';
 
 @Component({
@@ -39,6 +37,7 @@ export class AttendanceComponent implements OnInit {
         this.dtTrigger.next();
       },
       (err) => {
+        this.spinner.hide();
         console.log("err", err);
       },
     )
