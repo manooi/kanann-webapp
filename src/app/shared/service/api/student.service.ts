@@ -1,8 +1,22 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
+import { Observable } from 'rxjs';
 import { catchError, map, shareReplay, switchMap, tap } from 'rxjs/operators'
 import { environment } from 'src/environments/environment';
+
+export interface AssignmentScore {
+  studentId: string,
+  firstName: string,
+  lastName: string,
+  academicYearId: number,
+  academicYearName: string,
+  subjectCode: string,
+  subjectName: string,
+  assignmentName: string,
+  score: number,
+  totalScore: number,
+}
 
 @Injectable({
   providedIn: 'root'
@@ -29,10 +43,10 @@ export class StudentService {
     )
   }
 
-  getAssignmentScore() {
+  getAssignmentScore(academicYearId: number): Observable<AssignmentScore[]> {
     return this.getEmail().pipe(
       switchMap((email) => {
-        const queryParam = new HttpParams().set('userName', email);
+        const queryParam = new HttpParams().set('userName', email).set('academicYearId', academicYearId);
         return this.http.get(environment.apiUrl + "/Student/AssignmentScore", { params: queryParam }).pipe(
           map((i: any) => i.result)
         );

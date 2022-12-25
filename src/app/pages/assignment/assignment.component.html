@@ -56,7 +56,11 @@
         <!-- <td>{{dt.deadlineDate | thaidate}}</td> -->
         <td>
           <mat-chip-list aria-label="Fish selection">
-            <mat-chip *ngFor="let c of dt.assignedClassRooms">{{c.classRoomName}}</mat-chip>
+            <mat-chip *ngFor="let c of dt.assignedClassRooms">
+              <a [routerLink]="['/scoring/edit']" target="_blank"
+                [queryParams]="{academicYearId:isAcademicYear?.value?.value, subjectCode:isSubject?.value?.subjectCode, classRoomId: c.classRoomId}">
+                {{c.classRoomName}}</a>
+            </mat-chip>
           </mat-chip-list>
         </td>
         <td>

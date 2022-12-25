@@ -50,7 +50,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   imports: [
     CommonModule,
   ],
-  exports:[
+  exports: [
     A11yModule,
     ClipboardModule,
     CdkStepperModule,
@@ -95,7 +95,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     OverlayModule,
     PortalModule,
     ScrollingModule,
-    MatFormFieldModule
+    MatFormFieldModule,
   ]
 })
 export class MaterialModule { }
