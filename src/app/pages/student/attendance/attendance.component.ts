@@ -47,4 +47,16 @@ export class AttendanceComponent implements OnInit {
   get user() {
     return this.auth.user$;
   }
+
+  calculatePercentage(data: any): number {
+    return data.gainedClassWeight / data.totalClassWeight * 100;
+  }
+
+  calculateStatus(data: any): string {
+    const percentage = this.calculatePercentage(data);
+    if (percentage > 80) {
+      return 'มีสิทธิ์สอบ';
+    }
+    return 'ไม่มีสิทธิ์สอบ';
+  }
 }

@@ -12,35 +12,16 @@ import { DashboardService } from 'src/app/shared/service/api/dashboard.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+    ;
 
   selectedTabIndex: number = 0;
-  dtOptions: DataTables.Settings | any = {};
-  dtTrigger: Subject<any> = new Subject<any>();
-  @ViewChild(DataTableDirective, { static: false }) dtElement!: DataTableDirective;
 
-  data: any[] = [];
 
-  constructor(
-    private dashboardService: DashboardService,
-    private spinner: NgxSpinnerService,
-  ) {
-    this.dtOptions = AppConstant.dtOptions
-    this.dtOptions = {
-      ...this.dtOptions,
-    }
+  constructor() {
+
   }
-
   ngOnInit(): void {
-    this.spinner.show();
-    this.dashboardService.getLessThanEightyPercentAttendance().subscribe(
-      {
-        next: value => {
-          this.spinner.hide();
-          this.data = value;
-          this.dtTrigger.next();
-        },
-        error: err => this.spinner.hide()
-      }
-    )
+    
   }
+
 }

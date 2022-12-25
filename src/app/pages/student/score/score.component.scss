@@ -1,1 +1,37 @@
 @import '../../scss/shared.scss';
+
+table,
+th,
+td {
+  border: 1px solid;
+  border-collapse: collapse;
+}
+
+td {
+  text-align: center;
+}
+
+table {
+  width: 100%;
+}
+
+.header-row {
+  background-color: rgb(90, 101, 186);
+  color: white;
+  height: 2em;
+}
+
+tr > th {
+  border-color: black;
+}
+
+.summary-row {
+  background-color: rgb(240, 240, 240);
+  border-color: black;
+}
+
+@media screen and (min-width: 1080px) {
+  table {
+    width: 50%;
+  }
+}

@@ -4,33 +4,29 @@
 <mat-divider></mat-divider>
 
 <div class="mt-5"></div>
-
-<mat-card>
-  <h1 style="font-size: 2em">{{data[0]?.firstName}} {{data[0]?.lastName}}</h1>
-</mat-card>
-
+<h2 style="font-size: 2em">ชื่อ-สกุล: {{data[0]?.firstName}} {{data[0]?.lastName}}</h2>
 <div class="mt-5"></div>
 
-<mat-card>
-  <h2>การเข้าเรียนแยกตามรายวิชา</h2>
-  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="cell-border compact stripe">
-    <thead>
-      <tr>
-        <th>วิชา</th>
-        <th>คาบที่เข้าเรียน</th>
-        <th>จำนวนคาบทั้งหมด</th>
-        <th>%</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let dt of data">
-        <td>{{dt.subjectCode}} - {{dt.subjectName}}</td>
-        <td>{{dt.gainedClassWeight}}</td>
-        <td>{{dt.totalClassWeight}}</td>
-        <td>{{(dt.gainedClassWeight / dt.totalClassWeight) * 100 | number:'1.2-2'}}</td>
-      </tr>
-    </tbody>
-  </table>
-</mat-card>
+<h2>เวลาเรียนแยกตามรายวิชา</h2>
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="cell-border compact stripe">
+  <thead>
+    <tr>
+      <th>วิชา</th>
+      <th>คาบที่เข้าเรียน</th>
+      <th>จำนวนคาบทั้งหมด</th>
+      <th>%</th>
+      <th>สถานะ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let dt of data">
+      <td>{{dt.subjectCode}} - {{dt.subjectName}}</td>
+      <td>{{dt.gainedClassWeight}}</td>
+      <td>{{dt.totalClassWeight}}</td>
+      <td>{{calculatePercentage(dt) | number:'1.2-2'}}</td>
+      <td [ngClass]="calculatePercentage(dt) >= 80 ? 'green' : 'red'">{{calculateStatus(dt)}}</td>
+    </tr>
+  </tbody>
+</table>
 
 <!-- <pre>{{data | json}}</pre> -->
