@@ -1,0 +1,46 @@
+<div class="mt-4"></div>
+<h3>ปีการศึกษา</h3>
+<form [formGroup]="form" novalidate>
+  <mat-form-field appearance="fill" *ngIf="(dropdown | async) as dropdownData">
+    <mat-label>เลือกปีการศึกษา</mat-label>
+    <mat-select (valueChange)="onAcademicYearChanges($event)" formControlName="academicYear">
+      <mat-option *ngFor="let year of dropdownData" [value]="year.value">
+        {{year.text}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
+
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="cell-border compact stripe">
+  <thead>
+    <tr>
+      <th>รหัสประจำตัว</th>
+      <th>เลขที่</th>
+      <th>ชื่อ</th>
+      <th>สกุล</th>
+      <th>ห้องเรียน</th>
+      <th>วิชาเรียน</th>
+      <th>มา</th>
+      <th>สาย</th>
+      <th>ลา</th>
+      <th>ขาด</th>
+      <th>% การเข้าเรียน</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let dt of data">
+      <td>{{dt.studentId}}</td>
+      <td>{{dt.sequence}}</td>
+      <td>{{dt.firstName}}</td>
+      <td>{{dt.lastName}}</td>
+      <td>{{dt.classRoomName}}</td>
+      <td>{{dt.subjectCode}} - {{dt.subjectName}}</td>
+      <td>{{dt.status1}}</td>
+      <td>{{dt.status2}}</td>
+      <td>{{dt.status3}}</td>
+      <td>{{dt.status4}}</td>
+      <td>{{(dt.status1 + dt.status2 + dt.status3 ) / (dt.status1 + dt.status2 + dt.status3 + dt.status4) * 100 |
+        number:'1.2-2'}} %</td>
+    </tr>
+  </tbody>
+</table>

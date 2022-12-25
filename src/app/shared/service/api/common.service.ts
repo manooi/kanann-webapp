@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, iif, of } from 'rxjs';
-import { catchError, map, shareReplay, switchMap, tap } from 'rxjs/operators'
+import { BehaviorSubject, iif, of } from 'rxjs';
+import { catchError, map, shareReplay, switchMap } from 'rxjs/operators'
 import { Dropdown } from 'src/app/model/dropdown';
 import { environment } from 'src/environments/environment';
 import { AlertService } from '../utility/alert.service';
@@ -63,7 +63,7 @@ export class CommonService {
     return this.http.get<any[]>(environment.apiUrl + '/Common/ClassRoom', { params: queryParam }).pipe(map((i: any) => i.result), shareReplay(1));
   }
 
-  onAcademicYearChanges(academicYear: string) {
+  onAcademicYearChanges(academicYear: string | number) {
     this.academicYearSubject.next(academicYear);
   }
 
