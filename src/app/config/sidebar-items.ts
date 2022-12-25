@@ -62,7 +62,7 @@ export const sidebarItems: SideBarItems[] =
         },
         {
           name: 'Dashboard',
-          matIcon: 'settings',
+          matIcon: 'dashboard',
           id: '6',
           routerLink: '/dashboard',
           routerLinkActive: 'active'

@@ -9,6 +9,7 @@ import { AssignmentScore, StudentService } from 'src/app/shared/service/api/stud
 interface ScoreData {
   subjectCode: string,
   subjectName: string,
+  score: number,
   totalScore: number,
   data: any[]
 }
@@ -30,7 +31,6 @@ export class ScoreComponent implements OnInit {
         });
         this.onAcademicYearChanges(data[0].value);
       }
-      this.spinner.hide();
     })
   );
 
@@ -82,16 +82,22 @@ export class ScoreComponent implements OnInit {
       return prev;
     }, {});
 
+    const getSumScore = (data: any[], key: string) => {
+      return data.reduce((prev, cur) => {
+        return prev + cur[key]
+      }, 0) as number
+    };
+
     const subjects = Object.keys(grouppedDataBySubject);
     subjects.forEach((subject) => {
       this.data.push({
         subjectCode: grouppedDataBySubject[subject][0].subjectCode,
         subjectName: grouppedDataBySubject[subject][0].subjectName,
         data: grouppedDataBySubject[subject],
-        totalScore: 50
+        score: getSumScore(grouppedDataBySubject[subject], 'score'),
+        totalScore: getSumScore(grouppedDataBySubject[subject], 'totalScore'),
       })
     });
-
   }
 
   onAcademicYearChanges(academicYearId: number) {

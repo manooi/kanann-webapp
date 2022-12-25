@@ -4,37 +4,37 @@
 <mat-divider></mat-divider>
 
 <div class="mt-5"></div>
-<h2 style="font-size: 2em" *ngIf="data.length > 0">ชื่อ-สกุล: {{data[0].data[0].firstName}} {{data[0].data[0].lastName}}</h2>
+<h2 style="font-size: 2em" *ngIf="data.length > 0">ชื่อ-สกุล: {{data[0].data[0].firstName}} {{data[0].data[0].lastName}}
+</h2>
 <div class="mt-5"></div>
 
 <h2>คะแนนเก็บและผลการเรียน</h2>
 
 <form [formGroup]="scoreForm" *ngIf="(dropdown | async) as dropdownData">
-      <h3>ปีการศึกษา</h3>
-      <mat-form-field appearance="fill">
-        <mat-label>เลือกปีการศึกษา</mat-label>
-        <mat-select (valueChange)="onAcademicYearChanges($event)" formControlName="academicYear">
-          <mat-option *ngFor="let year of $any(dropdownData)" [value]="year.value">
-            {{year.text}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+  <h3>ปีการศึกษา</h3>
+  <mat-form-field appearance="fill">
+    <mat-label>เลือกปีการศึกษา</mat-label>
+    <mat-select (valueChange)="onAcademicYearChanges($event)" formControlName="academicYear">
+      <mat-option *ngFor="let year of $any(dropdownData)" [value]="year.value">
+        {{year.text}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </form>
 
 <mat-accordion>
   <mat-expansion-panel *ngFor="let dt of data">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{dt.subjectCode}} - {{dt.subjectName}}
+        <strong> <span class="mr-2">👉</span> {{dt.subjectCode}} - {{dt.subjectName}} </strong>
       </mat-panel-title>
       <mat-panel-description>
-        {{dt.totalScore}}
+        <!-- {{dt.totalScore}} -->
       </mat-panel-description>
     </mat-expansion-panel-header>
     <table class="table">
       <thead>
-        <tr>
-          <th>วิชา</th>
+        <tr class="header-row">
           <th>งาน</th>
           <th>คะแนนที่ได้</th>
           <th>คะแนนเต็ม</th>
@@ -42,10 +42,14 @@
       </thead>
       <tbody>
         <tr *ngFor="let d of dt.data">
-          <td>{{d.subjectCode}} - {{dt.subjectName}}</td>
           <td>{{d.assignmentName}}</td>
           <td>{{d.score}}</td>
           <td>{{d.totalScore}}</td>
+        </tr>
+        <tr class="summary-row">
+          <td style="font-weight: bold;">รวม</td>
+          <td style="font-weight: bold;">{{dt.score}}</td>
+          <td style="font-weight: bold;">{{dt.totalScore}}</td>
         </tr>
       </tbody>
     </table>
