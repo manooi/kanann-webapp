@@ -1,11 +1,13 @@
-<div class="box w-8">
-  <div class="text-center">
-    <h1 style="font-size: 3em">แตะ RFID</h1>
-  </div>
-  <div>
-    <mat-form-field class="mt-6 full-width" appearance="fill">
-      <mat-label></mat-label>
-      <input matInput [(ngModel)]="rfidValue" name="rfid" (change)="onChange($event)" #rfid>
-    </mat-form-field>
+<div class="grid">
+  <div class="col-12 mt-4">
+    <div class="text-center">
+      <h1 style="font-size: 3em">แตะ RFID</h1>
+    </div>
+    <div>
+      <mat-form-field class="mt-6 full-width" appearance="fill">
+        <mat-label></mat-label>
+        <input matInput [(ngModel)]="rfidValue" name="rfid" (change)="onChange($event)" #rfid>
+      </mat-form-field>
+    </div>
   </div>
 </div>

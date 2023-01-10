@@ -1,14 +1,11 @@
-<section class="navbar">
-  <app-navbar [sidenav]="sidenav"></app-navbar>
-</section>
-
 <section>
-  <mat-sidenav-container>
-    <mat-sidenav #sidenav="matSidenav">
+  <mat-sidenav-container class="mat-sidenav-container">
+    <mat-sidenav #sidenav="matSidenav" class="mat-sidenav">
       <app-sidebar [sidenav]="sidenav"></app-sidebar>
     </mat-sidenav>
 
     <mat-sidenav-content>
+      <app-navbar [sidenav]="sidenav"></app-navbar>
       <div class="main-content">
         <router-outlet></router-outlet>
       </div>

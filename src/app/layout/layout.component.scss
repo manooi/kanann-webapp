@@ -1,39 +1,17 @@
 @import './layout.config.scss';
 
-.navbar {
-  position: sticky;
-  top: 0;
-  // z-index: 999;
-}
-
-mat-sidenav-container {
-  position: fixed;
-  top: 64px;
-  height: calc(100vh - 64px);
+.mat-sidenav-container {
   width: 100%;
-  // border: 2px solid rgb(13, 0, 255);
 }
 
-mat-sidenav {
-  position: fixed;
-  top: 64px;
-  // border: 2px solid red;
-  // margin: 16px;
+.mat-sidenav {
   width: $side-bar-width;
-  // border-right: none;
-  // background: #002b5c;
-  // color: white;
-  // padding: 16px;
-  // text-align: center;
+  background: rgb(17, 23, 41);
+  color: white;
 }
 
 .main-content {
-  background-color: white;
   padding: 2em;
   height: 100%;
-  // padding: 0.5em 0em 0 1.5em;
-  // border: 2px solid red;
-
-  // position: fixed;
-  // top: $nav-bar-height;
+  min-height: calc(100vh - 64px);
 }
