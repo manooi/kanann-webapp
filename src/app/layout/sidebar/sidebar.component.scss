@@ -11,7 +11,12 @@
   img {
     width: 100%;
     border-radius: 50%;
+    border: 3px solid rgb(255, 255, 255);
   }
+}
+
+.username {
+  font-size: 1.2em;
 }
 
 .active {
