@@ -80,7 +80,7 @@ export const sidebarItems: SideBarItems[] =
           routerLinkActive: 'active'
         },
         {
-          name: 'คะแนนเก็บ',
+          name: 'ผลการเรียน',
           matIcon: 'adb',
           id: '8',
           routerLink: '/student/score',

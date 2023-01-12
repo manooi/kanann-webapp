@@ -1,8 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDrawer, MatSidenav } from '@angular/material/sidenav';
-import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { SavedStateService } from 'src/app/shared/service/savedstate.service';
 import { environment } from 'src/environments/environment';
 
 @Component({

@@ -1,15 +1,15 @@
-<mat-toolbar color="primary" class="nav-bar">
+<mat-toolbar class="nav-bar">
   <button mat-icon-button class="example-icon" (click)="sidenav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
-  <span class="logo" style="cursor: pointer">คะแนน.com</span>
+  <!-- <span class="logo" style="cursor: pointer">คะแนน.com</span> -->
   <span class="spacer"></span>
 
   <!-- <span>{{givenName}}</span> -->
-  <ng-container *ngIf="auth.user$ | async as user">
+  <!-- <ng-container *ngIf="auth.user$ | async as user">
     <img [src]="user?.picture" class="avatar mr-2">
     <span>{{user.given_name}} {{user.family_name}}</span>
-  </ng-container>
+  </ng-container> -->
   <mat-icon class="ml-3" style="cursor: pointer" (click)="logout()">logout</mat-icon>
   
 </mat-toolbar>

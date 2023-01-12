@@ -1,46 +1,71 @@
 <div class="mt-4"></div>
-<h3>ปีการศึกษา</h3>
-<form [formGroup]="form" novalidate>
-  <mat-form-field appearance="fill" *ngIf="(dropdown | async) as dropdownData">
-    <mat-label>เลือกปีการศึกษา</mat-label>
-    <mat-select (valueChange)="onAcademicYearChanges($event)" formControlName="academicYear">
-      <mat-option *ngFor="let year of dropdownData" [value]="year.value">
-        {{year.text}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</form>
+<div class="grid mr-0 ml-0">
+  <div class="sm:col-12 md:col-4">
+    <h3>ปีการศึกษา</h3>
+    <form [formGroup]="form" novalidate>
+      <mat-form-field appearance="fill" *ngIf="(dropdown | async) as dropdownData">
+        <mat-label>เลือกปีการศึกษา</mat-label>
+        <mat-select (valueChange)="onAcademicYearChanges($event)" formControlName="academicYear">
+          <mat-option *ngFor="let year of dropdownData" [value]="year.value">
+            {{year.text}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </div>
+  <div class="sm:col-12 md:col-8">
+    <div class="flex justify-content-around gap-5">
+      <div class="card">
+        <h3>จำนวนนักเรียน</h3>
+        <p class="mt-1" style="font-size: 2.5em;">{{data.length}}</p>
+      </div>
+      <div class="card">
+        <h3 style="color: green">เข้าเรียนเกิน 80%</h3>
+        <p class="mt-1" style="font-size: 2.5em; color:green; display: inline-block;">{{moreThanEqualEighty}}</p>
+        <!-- <img src="/assets/img/happy-svgrepo-com.png"> -->
+      </div>
+      <div class="card">
+        <h3 style="color:red">เข้าเรียนน้อยกว่า 80%</h3>
+        <p class="mt-1" style="font-size: 2.5em; color:red">{{data.length - moreThanEqualEighty}}</p>
+      </div>
+    </div>
+  </div>
+</div>
 
-<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="cell-border compact stripe">
-  <thead>
-    <tr>
-      <th>รหัสประจำตัว</th>
-      <th>เลขที่</th>
-      <th>ชื่อ</th>
-      <th>สกุล</th>
-      <th>ห้องเรียน</th>
-      <th>วิชาเรียน</th>
-      <th>มา</th>
-      <th>สาย</th>
-      <th>ลา</th>
-      <th>ขาด</th>
-      <th>% การเข้าเรียน</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let dt of data">
-      <td>{{dt.studentId}}</td>
-      <td>{{dt.sequence}}</td>
-      <td>{{dt.firstName}}</td>
-      <td>{{dt.lastName}}</td>
-      <td>{{dt.classRoomName}}</td>
-      <td>{{dt.subjectCode}} - {{dt.subjectName}}</td>
-      <td>{{dt.status1}}</td>
-      <td>{{dt.status2}}</td>
-      <td>{{dt.status3}}</td>
-      <td>{{dt.status4}}</td>
-      <td>{{(dt.status1 + dt.status2 + dt.status3 ) / (dt.status1 + dt.status2 + dt.status3 + dt.status4) * 100 |
-        number:'1.2-2'}} %</td>
-    </tr>
-  </tbody>
-</table>
+<div class="grid mr-0 ml-0 mt-3">
+  <div class="col-12">
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="cell-border compact stripe">
+      <thead>
+        <tr>
+          <th>รหัสประจำตัว</th>
+          <th>เลขที่</th>
+          <th>ชื่อ</th>
+          <th>สกุล</th>
+          <th>ห้องเรียน</th>
+          <th>วิชาเรียน</th>
+          <th>มา</th>
+          <th>สาย</th>
+          <th>ลา</th>
+          <th>ขาด</th>
+          <th>% การเข้าเรียน</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dt of data">
+          <td>{{dt.studentId}}</td>
+          <td>{{dt.sequence}}</td>
+          <td>{{dt.firstName}}</td>
+          <td>{{dt.lastName}}</td>
+          <td>{{dt.classRoomName}}</td>
+          <td>{{dt.subjectCode}} - {{dt.subjectName}}</td>
+          <td>{{dt.status1}}</td>
+          <td>{{dt.status2}}</td>
+          <td>{{dt.status3}}</td>
+          <td>{{dt.status4}}</td>
+          <td>{{(dt.status1 + dt.status2 + dt.status3 ) / (dt.status1 + dt.status2 + dt.status3 + dt.status4) * 100 |
+            number:'1.2-2'}} %</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

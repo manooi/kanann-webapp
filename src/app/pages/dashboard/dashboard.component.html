@@ -1,13 +1,13 @@
-<h1 class="mt-4" style="font-size: 2.5em">
+<h1 class="mt-2" style="font-size: 2.5em">
   <mat-icon style="font-size: 0.8em" class="mr-2">dashboard</mat-icon> Dashboard
 </h1>
 
 <mat-tab-group [selectedIndex]="selectedTabIndex" #matTab (selectedTabChange)="selectedTabIndex = $event.index">
-  <mat-tab label="เข้าเรียนน้อยกว่า 80%">
-    <app-lessthaneighty></app-lessthaneighty>
-  </mat-tab>
   <mat-tab label="สรุปการเข้าเรียน">
     <app-attendace-summary></app-attendace-summary>
+  </mat-tab>
+  <mat-tab label="เข้าเรียนน้อยกว่า 80%">
+    <app-lessthaneighty></app-lessthaneighty>
   </mat-tab>
 </mat-tab-group>
 

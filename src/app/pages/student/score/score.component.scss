@@ -15,10 +15,14 @@ table {
   width: 100%;
 }
 
-.header-row {
-  background-color: rgb(90, 101, 186);
+.header {
+  background-color: #2D3344;
   color: white;
   height: 2em;
+}
+
+.subheader {
+  background-color: rgb(224, 224, 224);
 }
 
 tr > th {
@@ -26,12 +30,6 @@ tr > th {
 }
 
 .summary-row {
-  background-color: rgb(240, 240, 240);
+  background-color: rgb(220, 220, 220);
   border-color: black;
-}
-
-@media screen and (min-width: 1080px) {
-  table {
-    width: 50%;
-  }
 }

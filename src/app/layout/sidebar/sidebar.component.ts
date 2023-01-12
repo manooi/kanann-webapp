@@ -2,6 +2,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { NavigationEnd, Router } from '@angular/router';
+import { AuthService } from '@auth0/auth0-angular';
 import { Subject } from 'rxjs';
 import { delay, filter, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { getSideBarItemById, SideBarItems } from 'src/app/config/sidebar-items';
@@ -20,7 +21,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private breakpointObserver: BreakpointObserver,
-    private authCredentialService: AuthCredentialService
+    private authCredentialService: AuthCredentialService,
+    public auth: AuthService,
   ) {
   }
 
