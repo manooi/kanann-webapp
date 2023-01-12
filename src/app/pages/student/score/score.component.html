@@ -1,5 +1,5 @@
 <h1 class="mt-2" style="font-size: 2.5em">
-  <mat-icon style="font-size: 0.8em" class="mr-2">access_time</mat-icon> คะแนนเก็บ
+  <mat-icon style="font-size: 0.8em" class="mr-2">access_time</mat-icon> ผลการเรียน
 </h1>
 <mat-divider></mat-divider>
 
@@ -8,10 +8,8 @@
 </h2>
 <div class="mt-5"></div>
 
-<h2>คะแนนเก็บและผลการเรียน</h2>
-
 <form [formGroup]="scoreForm" *ngIf="(dropdown | async) as dropdownData">
-  <h3>ปีการศึกษา</h3>
+  <h2>ปีการศึกษา</h2>
   <mat-form-field appearance="fill">
     <mat-label>เลือกปีการศึกษา</mat-label>
     <mat-select (valueChange)="onAcademicYearChanges($event)" formControlName="academicYear">
@@ -22,36 +20,102 @@
   </mat-form-field>
 </form>
 
-<mat-accordion>
-  <mat-expansion-panel *ngFor="let dt of data">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <strong> <span class="mr-2">👉</span> {{dt.subjectCode}} - {{dt.subjectName}} </strong>
-      </mat-panel-title>
-      <mat-panel-description>
-        <!-- {{dt.totalScore}} -->
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <table class="table">
+<h2>ผลการเรียน</h2>
+<div class="grid" *ngIf="gpaData.length > 0">
+  <div class="col-12 md:col-10 xl:col-4">
+    <table>
       <thead>
-        <tr class="header-row">
-          <th>งาน</th>
-          <th>คะแนนที่ได้</th>
-          <th>คะแนนเต็ม</th>
+        <tr class="header">
+          <th colspan="4">ภาคการศึกษา {{gpaData[0].academicYearName}}</th>
+        </tr>
+        <tr class="subheader">
+          <th>รหัสวิชา</th>
+          <th>ชื่อวิชา</th>
+          <th>หน่วยกิต</th>
+          <th>เกรด</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let d of dt.data">
-          <td>{{d.assignmentName}}</td>
-          <td>{{d.score}}</td>
-          <td>{{d.totalScore}}</td>
-        </tr>
-        <tr class="summary-row">
-          <td style="font-weight: bold;">รวม</td>
-          <td style="font-weight: bold;">{{dt.score}}</td>
-          <td style="font-weight: bold;">{{dt.totalScore}}</td>
+        <tr *ngFor="let dt of gpaData">
+          <td>{{dt.subjectCode}}</td>
+          <td>{{dt.subjectName}}</td>
+          <td>{{dt.credit}}</td>
+          <td>{{calculateGrade(dt)}} {{isExpectedGrade(dt) ? '(คาดหมาย)' : ''}}</td>
         </tr>
       </tbody>
     </table>
-  </mat-expansion-panel>
-</mat-accordion>
+
+    <table class="mt-2">
+      <thead>
+        <tr>
+          <th colspan="4">เทอมนี้</th>
+          <th colspan="4">สะสม</th>
+        </tr>
+        <tr>
+          <th>C.Register</th>
+          <th>CA</th>
+          <th>GP</th>
+          <th>GPA</th>
+
+          <th>C.Register</th>
+          <th>CA</th>
+          <th>GP</th>
+          <th>GPA</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{currentTermGPA.creditRegister | number:'1.2-2'}}</td>
+          <td>{{currentTermGPA.creditAcc | number:'1.2-2'}}</td>
+          <td>{{currentTermGPA.gp | number:'1.2-2'}}</td>
+          <td>{{currentTermGPA.gpa | number:'1.2-2'}}</td>
+          <td>{{cumulativeGPA.creditAcc | number:'1.2-2'}}</td>
+          <td>{{cumulativeGPA.creditRegister | number:'1.2-2'}}</td>
+          <td>{{cumulativeGPA.gp | number:'1.2-2'}}</td>
+          <td>{{cumulativeGPA.gpa | number:'1.2-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h2 class="mt-3">คะแนน</h2>
+<div class="grid">
+  <div class="col-12 md:col-10 xl:col-4">
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let dt of data" style="margin-bottom: 0.5em">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <strong> <span class="mr-2"></span> {{dt.subjectCode}} - {{dt.subjectName}} </strong>
+          </mat-panel-title>
+          <mat-panel-description>
+            <!-- {{dt.totalScore}} -->
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <table>
+          <thead>
+            <tr class="header">
+              <th>งาน</th>
+              <th>คะแนนที่ได้</th>
+              <th>คะแนนเต็ม</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let d of dt.data">
+              <td>{{d.assignmentName}}</td>
+              <td>{{d.score}}</td>
+              <td>{{d.totalScore}}</td>
+            </tr>
+            <tr class="summary-row">
+              <td style="font-weight: bold;">รวม</td>
+              <td style="font-weight: bold;">{{dt.score}}</td>
+              <td style="font-weight: bold;">{{dt.totalScore}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>

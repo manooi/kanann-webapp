@@ -3,11 +3,11 @@
 </h1>
 
 <mat-tab-group [selectedIndex]="selectedTabIndex" #matTab (selectedTabChange)="selectedTabIndex = $event.index">
-  <mat-tab label="เข้าเรียนน้อยกว่า 80%">
-    <app-lessthaneighty></app-lessthaneighty>
-  </mat-tab>
   <mat-tab label="สรุปการเข้าเรียน">
     <app-attendace-summary></app-attendace-summary>
+  </mat-tab>
+  <mat-tab label="เข้าเรียนน้อยกว่า 80%">
+    <app-lessthaneighty></app-lessthaneighty>
   </mat-tab>
 </mat-tab-group>
 

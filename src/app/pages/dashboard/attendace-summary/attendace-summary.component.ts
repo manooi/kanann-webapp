@@ -20,7 +20,7 @@ export class AttendaceSummaryComponent implements OnInit, AfterViewInit, OnDestr
   @ViewChild(DataTableDirective, { static: false }) dtElement!: DataTableDirective;
   form!: FormGroup;
   dropdown = this.commonService.academicYear$.pipe(
-    tap((data)=> {
+    tap((data) => {
       this.form.patchValue({
         academicYear: data[0].value
       });
@@ -30,6 +30,7 @@ export class AttendaceSummaryComponent implements OnInit, AfterViewInit, OnDestr
   );
 
   data: any[] = [];
+  moreThanEqualEighty: number = 0;
 
   constructor(
     private dashboardService: DashboardService,
@@ -60,7 +61,7 @@ export class AttendaceSummaryComponent implements OnInit, AfterViewInit, OnDestr
 
   onAcademicYearChanges(academicYearId: number) {
     this.commonService.onAcademicYearChanges(academicYearId);
-    this.fetch({academicYearId: academicYearId});
+    this.fetch({ academicYearId: academicYearId });
   }
 
   rerender(): void {
@@ -72,18 +73,24 @@ export class AttendaceSummaryComponent implements OnInit, AfterViewInit, OnDestr
     });
   }
 
-  fetch(param:any) {
+  fetch(param: any) {
     this.spinner.show();
     this.dashboardService.getAttendaceReport(param).subscribe(
       {
         next: value => {
           this.spinner.hide();
           this.data = value;
+
+          this.moreThanEqualEighty = value.reduce((prev: any, cur: any) => {
+            let total = (cur.status1 + cur.status2 + cur.status3 + cur.status4);
+            let percentage = ((cur.status1 + cur.status2 + cur.status3) / total) * 100;
+            return prev + (percentage >= 80 ? 1 : 0);
+          }, 0);
+
           this.rerender();
         },
         error: err => this.spinner.hide()
       }
     )
   }
-
 }

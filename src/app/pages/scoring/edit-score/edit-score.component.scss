@@ -1,7 +1,13 @@
 table,
 th,
 td {
-  border: 0.75px solid black;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+tr>th {
+  padding: 0.25em;
+  background-color: rgb(220, 220, 220);
 }
 
 th {
@@ -17,7 +23,7 @@ td {
 }
 
 .no {
-  width: 35px;
+  width: 55px;
   text-align: center;
 }
 

@@ -15,7 +15,21 @@ export interface AssignmentScore {
   subjectName: string,
   assignmentName: string,
   score: number,
+  totalScore: number
+  credit: number
+}
+
+export interface AssignmentScoreSummary {
+  studentId: string,
+  firstName: string,
+  lastName: string,
+  academicYearId: number,
+  academicYearName: string,
+  subjectCode: string,
+  subjectName: string,
+  score: number,
   totalScore: number,
+  credit: number
 }
 
 @Injectable({
@@ -48,6 +62,28 @@ export class StudentService {
       switchMap((email) => {
         const queryParam = new HttpParams().set('userName', email).set('academicYearId', academicYearId);
         return this.http.get(environment.apiUrl + "/Student/AssignmentScore", { params: queryParam }).pipe(
+          map((i: any) => i.result)
+        );
+      })
+    )
+  }
+
+  getAssignmentScoreSummary(academicYearId: number): Observable<AssignmentScoreSummary[]> {
+    return this.getEmail().pipe(
+      switchMap((email) => {
+        const queryParam = new HttpParams().set('userName', email).set('academicYearId', academicYearId);
+        return this.http.get(environment.apiUrl + "/Student/AssignmentScoreSummary", { params: queryParam }).pipe(
+          map((i: any) => i.result)
+        );
+      })
+    )
+  }
+
+  getCumulativeGPA(): Observable<AssignmentScoreSummary[]> {
+    return this.getEmail().pipe(
+      switchMap((email) => {
+        const queryParam = new HttpParams().set('userName', email);
+        return this.http.get(environment.apiUrl + "/Student/AssignmentScoreSummary", { params: queryParam }).pipe(
           map((i: any) => i.result)
         );
       })
